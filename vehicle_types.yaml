@@ -1,0 +1,64 @@
+models:
+  VehicleType:
+    classification: enum:commercial,industrial,
+    category: string:20 unique,
+    relationships:
+      belongsToMany: VehicleFaultTemplate  
+  FaultType:
+    category: enum:engine,electical,kinetics,mechanics,tooling,hydraulics,bodywork,other
+    abbreviation: enum:ENG,ELE,KIN,MEC,TOO,HYD,BOD,OTH
+    relationships:
+      belongsToMany: VehicleFaultTemplate    
+  VehicleFaultTemplate:    
+    title: string:50
+    description: text nullable
+    description_gr: text nullable
+    precautions: text nullable
+    precautions_gr: text nullable
+    priority: enum:low,medium,high
+    relationships:
+      HasMany: VehicleType, FaultType
+
+factories:
+  VehicleType:
+    classification: faker:randomElement:commercial,industrial
+    category: faker:word
+    relationships:
+      belongsToMany: VehicleFaultTemplate
+  FaultType:
+    category: faker:randomElement:engine,electical,kinetics,mechanics,tooling,hydraulics,bodywork,other
+    abbreviation: faker:randomElement:ENG,ELE,KIN,MEC,TOO,HYD,BOD,OTH
+    relationships:
+      belongsToMany: VehicleFaultTemplate
+  VehicleFaultTemplate:
+    vehicle_type_uid: factory:VehicleType
+    fault_type_uid: factory:FaultType
+    title: faker:sentence
+    description: faker:text
+    description_gr: faker:text
+    precautions: faker:text
+    precautions_gr: faker:text
+    priority: faker:randomElement:low,medium,high
+    relationships:
+      HasOne: VehicleType, FaultType
+
+migrations:
+  VehicleTypes:
+    classification: enum:commercial,industrial
+    category: string:20 unique
+  FaultTypes:
+    category: enum:engine,electical,kinetics,mechanics,tooling,hydraulics,bodywork,other
+    abbreviation: enum:ENG,ELE,KIN,MEC,TOO,HYD,BOD,OTH  
+  VehicleFaultTemplates:
+    vehicle_type_uid: foreignId(vehicle_types) nullable
+    fault_type_uid: foreignId(fault_types) nullable
+    title: string:50
+    description: text nullable
+    description_gr: text nullable
+    precautions: text nullable
+    precautions_gr: text nullable
+    priority: enum:low,medium,high
+    relationships:
+      HasOne: VehicleType, FaultType
+
+seeders: VehicleTypes, FaultTypes, VehicleFaultTemplates

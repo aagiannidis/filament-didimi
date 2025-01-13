@@ -1,0 +1,236 @@
+[
+    { 
+        "name": "Toyota", 
+        "country": "Japan", 
+        "type": "commercial",
+        "best_selling_models": ["Corolla", "Camry", "RAV4"]
+    },
+    { 
+        "name": "Ford", 
+        "country": "United States", 
+        "type": "commercial",
+        "best_selling_models": ["F-Series", "Escape", "Explorer"]
+    },
+    { 
+        "name": "Volkswagen", 
+        "country": "Germany", 
+        "type": "commercial",
+        "best_selling_models": ["Golf", "Passat", "Tiguan"]
+    },
+    { 
+        "name": "Honda", 
+        "country": "Japan", 
+        "type": "commercial",
+        "best_selling_models": ["Civic", "Accord", "CR-V"]
+    },
+    { 
+        "name": "Chevrolet", 
+        "country": "United States", 
+        "type": "commercial",
+        "best_selling_models": ["Silverado", "Equinox", "Malibu"]
+    },
+    { 
+        "name": "BMW", 
+        "country": "Germany", 
+        "type": "commercial",
+        "best_selling_models": ["3 Series", "5 Series", "X5"]
+    },
+    { 
+        "name": "Mercedes-Benz", 
+        "country": "Germany", 
+        "type": "commercial",
+        "best_selling_models": ["C-Class", "E-Class", "S-Class"]
+    },
+    { 
+        "name": "Hyundai", 
+        "country": "South Korea", 
+        "type": "commercial",
+        "best_selling_models": ["Elantra", "Sonata", "Tucson"]
+    },
+    { 
+        "name": "Nissan", 
+        "country": "Japan", 
+        "type": "commercial",
+        "best_selling_models": ["Altima", "Sentra", "Rogue"]
+    },
+    { 
+        "name": "Kia", 
+        "country": "South Korea", 
+        "type": "commercial",
+        "best_selling_models": ["Soul", "Sportage", "Sorento"]
+    },
+    { 
+        "name": "Tesla", 
+        "country": "United States", 
+        "type": "commercial",
+        "best_selling_models": ["Model 3", "Model S", "Model X"]
+    },
+    { 
+        "name": "Audi", 
+        "country": "Germany", 
+        "type": "commercial",
+        "best_selling_models": ["A4", "Q5", "A6"]
+    },
+    { 
+        "name": "Porsche", 
+        "country": "Germany", 
+        "type": "commercial",
+        "best_selling_models": ["911", "Cayenne", "Macan"]
+    },
+    { 
+        "name": "Subaru", 
+        "country": "Japan", 
+        "type": "commercial",
+        "best_selling_models": ["Outback", "Forester", "Impreza"]
+    },
+    { 
+        "name": "Mazda", 
+        "country": "Japan", 
+        "type": "commercial",
+        "best_selling_models": ["Mazda3", "CX-5", "Mazda6"]
+    },
+    { 
+        "name": "Renault", 
+        "country": "France", 
+        "type": "commercial",
+        "best_selling_models": ["Clio", "Megane", "Captur"]
+    },
+    { 
+        "name": "Peugeot", 
+        "country": "France", 
+        "type": "commercial",
+        "best_selling_models": ["208", "3008", "308"]
+    },
+    { 
+        "name": "Fiat", 
+        "country": "Italy", 
+        "type": "commercial",
+        "best_selling_models": ["500", "Panda", "Tipo"]
+    },
+    { 
+        "name": "Lamborghini", 
+        "country": "Italy", 
+        "type": "commercial",
+        "best_selling_models": ["Huracan", "Aventador", "Urus"]
+    },
+    { 
+        "name": "Ferrari", 
+        "country": "Italy", 
+        "type": "commercial",
+        "best_selling_models": ["488", "Portofino", "Roma"]
+    },
+    { 
+        "name": "Volvo", 
+        "country": "Sweden", 
+        "type": "commercial",
+        "best_selling_models": ["XC60", "XC90", "S60"]
+    },
+    { 
+        "name": "Jaguar", 
+        "country": "United Kingdom", 
+        "type": "commercial",
+        "best_selling_models": ["F-Pace", "XE", "XF"]
+    },
+    { 
+        "name": "Land Rover", 
+        "country": "United Kingdom", 
+        "type": "commercial",
+        "best_selling_models": ["Range Rover", "Discovery", "Defender"]
+    },
+    { 
+        "name": "Rolls-Royce", 
+        "country": "United Kingdom", 
+        "type": "commercial",
+        "best_selling_models": ["Phantom", "Ghost", "Cullinan"]
+    },
+    { 
+        "name": "Bentley", 
+        "country": "United Kingdom", 
+        "type": "commercial",
+        "best_selling_models": ["Continental GT", "Bentayga", "Flying Spur"]
+    },
+    { 
+        "name": "Mitsubishi", 
+        "country": "Japan", 
+        "type": "commercial",
+        "best_selling_models": ["Outlander", "Lancer", "Pajero"]
+    },
+    { 
+        "name": "Suzuki", 
+        "country": "Japan", 
+        "type": "commercial",
+        "best_selling_models": ["Swift", "Vitara", "Jimny"]
+    },
+    { 
+        "name": "Chrysler", 
+        "country": "United States", 
+        "type": "commercial",
+        "best_selling_models": ["300", "Pacifica", "Voyager"]
+    },
+    { 
+        "name": "Buick", 
+        "country": "United States", 
+        "type": "commercial",
+        "best_selling_models": ["Enclave", "Encore", "LaCrosse"]
+    },    
+    { "name": "GMC", "country": "United States", "type": "commercial", "best_selling_models": ["Sierra", "Yukon", "Acadia"] },
+    { "name": "Jeep", "country": "United States", "type": "commercial", "best_selling_models": ["Wrangler", "Grand Cherokee", "Cherokee"] },
+    { "name": "Dodge", "country": "United States", "type": "commercial", "best_selling_models": ["Ram", "Charger", "Challenger"] },
+    { "name": "Alfa Romeo", "country": "Italy", "type": "commercial", "best_selling_models": ["Giulia", "Stelvio", "Giulietta"] },
+    { "name": "Citroën", "country": "France", "type": "commercial", "best_selling_models": ["C3", "C4", "Berlingo"] },
+    { "name": "Saab", "country": "Sweden", "type": "commercial", "best_selling_models": ["9-3", "9-5", "900"] },
+    { "name": "Opel", "country": "Germany", "type": "commercial", "best_selling_models": ["Corsa", "Astra", "Insignia"] },
+    { "name": "Skoda", "country": "Czech Republic", "type": "commercial", "best_selling_models": ["Octavia", "Fabia", "Superb"] },
+    { "name": "SEAT", "country": "Spain", "type": "commercial", "best_selling_models": ["Leon", "Ibiza", "Ateca"] },
+    { "name": "Bugatti", "country": "France", "type": "commercial", "best_selling_models": ["Veyron", "Chiron", "Divo"] },
+    { "name": "Aston Martin", "country": "United Kingdom", "type": "commercial", "best_selling_models": ["DB11", "Vantage", "DBX"] },
+    { "name": "Pagani", "country": "Italy", "type": "commercial", "best_selling_models": ["Huayra", "Zonda"] },
+    { "name": "McLaren", "country": "United Kingdom", "type": "commercial", "best_selling_models": ["720S", "570S", "P1"] },
+    { "name": "Genesis", "country": "South Korea", "type": "commercial", "best_selling_models": ["G70", "G80", "GV80"] },
+    { "name": "Mini", "country": "United Kingdom", "type": "commercial", "best_selling_models": ["Cooper", "Countryman", "Clubman"] },
+    { "name": "Lexus", "country": "Japan", "type": "commercial", "best_selling_models": ["RX", "ES", "NX"] },
+    { "name": "Infiniti", "country": "Japan", "type": "commercial", "best_selling_models": ["Q50", "QX60", "QX80"] },
+    { "name": "Acura", "country": "Japan", "type": "commercial", "best_selling_models": ["MDX", "RDX", "TLX"] },
+    { "name": "Holden", "country": "Australia", "type": "commercial", "best_selling_models": ["Commodore", "Colorado", "Astra"] },
+    { "name": "Caterpillar (CAT)", "country": "United States", "type": "industrial", "best_selling_models": ["D11", "797F", "320"] },
+    { "name": "Komatsu", "country": "Japan", "type": "industrial", "best_selling_models": ["PC2000", "HD785", "WA600"] },
+    { "name": "Hitachi Construction Machinery", "country": "Japan", "type": "industrial", "best_selling_models": ["EX8000", "ZX350", "EH5000"] },
+    { "name": "Volvo Construction Equipment", "country": "Sweden", "type": "industrial", "best_selling_models": ["A40G", "EC750E", "L350H"] },
+     { "name": "Liebherr", "country": "Germany", "type": "industrial", "best_selling_models": ["R9800", "LTM 11200-9.1", "T 284"] },
+    { "name": "John Deere", "country": "United States", "type": "industrial", "best_selling_models": ["944K", "850K", "410E"] },
+    { "name": "Doosan Infracore", "country": "South Korea", "type": "industrial", "best_selling_models": ["DX800LC", "DA30", "DL550"] },
+    { "name": "JCB", "country": "United Kingdom", "type": "industrial", "best_selling_models": ["3CX", "JS220", "525-60"] },
+    { "name": "Hyundai Construction Equipment", "country": "South Korea", "type": "industrial", "best_selling_models": ["R220LC-9A", "HL960", "HX520L"] },
+    { "name": "Terex", "country": "United States", "type": "industrial", "best_selling_models": ["RT780", "TA400", "AC 100/4L"] },
+    { "name": "Sany", "country": "China", "type": "industrial", "best_selling_models": ["SY500H", "SCC8300", "SY215C"] },
+    { "name": "XCMG", "country": "China", "type": "industrial", "best_selling_models": ["XE7000", "XCA1200", "LW1200K"] },
+    { "name": "Zoomlion", "country": "China", "type": "industrial", "best_selling_models": ["ZCC9800W", "QY110", "ZE700G"] },
+    { "name": "Kubota", "country": "Japan", "type": "industrial", "best_selling_models": ["KX080-4", "SVL95-2s", "U55-4"] },
+    { "name": "Case Construction Equipment", "country": "United States", "type": "industrial", "best_selling_models": ["580N", "CX210D", "TR340"] },
+    { "name": "New Holland Construction", "country": "United States", "type": "industrial", "best_selling_models": ["C245", "B95C", "E37C"] },
+    { "name": "Bell Equipment", "country": "South Africa", "type": "industrial", "best_selling_models": ["B50E", "L2606E", "T40D"] },
+    { "name": "Manitou", "country": "France", "type": "industrial", "best_selling_models": ["MT 1840", "MRT 2150", "MLT 840"] },
+    { "name": "Yanmar", "country": "Japan", "type": "industrial", "best_selling_models": ["VIO80", "SV100", "VIO55"] },
+    { "name": "Tadano", "country": "Japan", "type": "industrial", "best_selling_models": ["ATF 400G-6", "GR-1000XL", "AC 7.450-1"] },
+    { "name": "Kobelco", "country": "Japan", "type": "industrial", "best_selling_models": ["SK500LC-10", "CK3300G-2", "SK210LC-10"] },
+    { "name": "Sumitomo", "country": "Japan", "type": "industrial", "best_selling_models": ["SH700LHD-5", "SCX2800A-3", "SH210-6"] },
+    { "name": "Wirtgen Group", "country": "Germany", "type": "industrial", "best_selling_models": ["W 210 Fi", "VÖGELE SUPER 2000-3i", "HAMM HD+ 90i VO"] },
+    { "name": "Bobcat", "country": "United States", "type": "industrial", "best_selling_models": ["T770", "E35", "S650"] },
+    { "name": "Genie", "country": "United States", "type": "industrial", "best_selling_models": ["S-85", "Z-45/25J", "GS-1930"] },
+    { "name": "BOMAG", "country": "Germany", "type": "industrial", "best_selling_models": ["BW 213", "BF 800", "BM 2000/60"] },
+    { "name": "Sandvik", "country": "Sweden", "type": "industrial", "best_selling_models": ["TH663i", "DD422iE", "LH621i"] },
+    { "name": "Metso", "country": "Finland", "type": "industrial", "best_selling_models": ["LT106", "HP300", "ST2.8"] },
+    { "name": "Astec Industries", "country": "United States", "type": "industrial", "best_selling_models": ["Double Barrel", "Voyager 140", "Ranger"] },
+    { "name": "LiuGong", "country": "China", "type": "industrial", "best_selling_models": ["856H", "922E", "950E"] },
+    { "name": "Shantui", "country": "China", "type": "industrial", "best_selling_models": ["SD90-5", "DH17", "SE220"] },
+    { "name": "Hidromek", "country": "Turkey", "type": "industrial", "best_selling_models": ["HMK 640 WL", "HMK 102B", "HMK 490 LC HD"] },
+    { "name": "Furukawa Rock Drill (FRD)", "country": "Japan", "type": "industrial", "best_selling_models": ["HCR1200-ED", "FXJ375", "F27"] },
+    { "name": "Amman Group", "country": "Switzerland", "type": "industrial", "best_selling_models": ["ARX 91", "ASC 110", "AFW 150 G"] },
+    { "name": "Schwing Stetter", "country": "Germany", "type": "industrial", "best_selling_models": ["SP 1800", "S 36 X", "BP 350"] },
+    { "name": "Dynapac", "country": "Sweden", "type": "industrial", "best_selling_models": ["CA3500D", "SD2500CS", "CC4200"] },
+    { "name": "Atlas Copco", "country": "Sweden", "type": "industrial", "best_selling_models": ["PowerROC T50", "GA 75", "QAS 150"] },
+    { "name": "Putzmeister", "country": "Germany", "type": "industrial", "best_selling_models": ["BSF 36-4", "TK 70", "MX 43/47Z"] },
+    { "name": "Zoomlion Concrete", "country": "China", "type": "industrial", "best_selling_models": ["HBT60.13.90SU", "ZLJ5330THB", "ZLJ5440THBB"] },
+    { "name": "Kawasaki Heavy Industries", "country": "Japan", "type": "industrial", "best_selling_models": ["K3V112DT", "M7V85", "K8V71"] },
+    { "name": "Fayat Group", "country": "France", "type": "industrial", "best_selling_models": ["Bomag BW 211", "Marini Magnum 140", "Secmair Chipsealer"] }
+]

@@ -1,0 +1,253 @@
+[
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Tyres",
+        "FaultCategoryAbbreviation": "TYR",
+        "Fault": "Flat Tyre",
+        "FaultDescription": "A tyre has lost air or is completely flat, requiring replacement or inflation.",
+        "Precautions": "Avoid driving if the tyre is flat; replace or inflate the tyre before use.",
+        "Priority": "Medium"
+    },    
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Tyres",
+        "FaultCategoryAbbreviation": "TYR",
+        "Fault": "Worn Tyre",
+        "FaultDescription": "Tyre tread has worn down to unsafe levels, requiring replacement.",
+        "Precautions": "Replace the tyre as soon as possible to avoid safety hazards.",
+        "Priority": "High"
+    },        
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Tyres",
+        "FaultCategoryAbbreviation": "TYR",
+        "Fault": "Damaged Tyre",
+        "FaultDescription": "Tyre has visible damage (e.g., cuts, punctures) that compromises its integrity.",
+        "Precautions": "Do not drive the vehicle; replace or repair the tyre immediately.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Battery",
+        "FaultCategoryAbbreviation": "BAT",      
+        "Fault": "Dead Battery",
+        "FaultDescription": "The vehicle battery is completely discharged or no longer holding a charge.",
+        "Precautions": "Jump-start the vehicle to get it to a service center for replacement.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Battery",
+        "FaultCategoryAbbreviation": "BAT",      
+        "Fault": "Battery Terminals Corroded",
+        "FaultDescription": "Battery terminals show signs of corrosion, potentially causing electrical issues.",
+        "Precautions": "Clean corrosion with a solution of baking soda and water. If issues persist, replace the battery.",
+        "Priority": "Medium"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Battery",
+        "FaultCategoryAbbreviation": "BAT",      
+        "Fault": "Weak Battery",
+        "FaultDescription": "Battery is old or malfunctioning, unable to hold a full charge.",
+        "Precautions": "Replace the battery soon to prevent vehicle breakdown.",
+        "Priority": "Medium"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Windscreen/Wipers",
+        "FaultCategoryAbbreviation": "WWS",      
+        "Fault": "Wiper Blade Damage",
+        "FaultDescription": "Wiper blades are torn, cracked, or otherwise ineffective in clearing the windscreen.",
+        "Precautions": "Replace the wiper blades immediately to ensure visibility in adverse weather conditions.",
+        "Priority": "Medium"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Windscreen/Wipers",
+        "FaultCategoryAbbreviation": "WWS",      
+        "Fault": "Windscreen Crack",
+        "FaultDescription": "Crack or chip in the windscreen that may impair visibility.",
+        "Precautions": "Avoid driving in conditions that could worsen the crack; schedule repairs immediately.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Windscreen/Wipers",
+        "FaultCategoryAbbreviation": "WWS",      
+        "Fault": "Wiper Motor Failure",
+        "FaultDescription": "The motor that drives the wiper blades has failed, rendering the wipers inoperable.",
+        "Precautions": "Do not drive in inclement weather; get the motor repaired or replaced.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Vehicle Service",
+        "FaultCategoryAbbreviation": "VS",              
+        "Fault": "Engine Overheating",
+        "FaultDescription": "Engine temperature exceeds safe limits, potentially causing long-term damage.",
+        "Precautions": "Stop the vehicle immediately; allow the engine to cool and check coolant levels.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Vehicle Service",
+        "FaultCategoryAbbreviation": "VS",              
+        "Fault": "Oil Change Due",
+        "FaultDescription": "The vehicle's oil needs to be changed as part of regular maintenance.",
+        "Precautions": "Schedule an oil change at the earliest to prevent engine wear.",
+        "Priority": "Medium"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Vehicle Service",
+        "FaultCategoryAbbreviation": "VS",              
+        "Fault": "Transmission Fluid Low",
+        "FaultDescription": "Low or degraded transmission fluid can cause shifting issues and damage the transmission.",
+        "Precautions": "Get the fluid levels checked and refilled as soon as possible.",
+        "Priority": "Medium"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Elecrical System",
+        "FaultCategoryAbbreviation": "ES",      
+        "Fault": "Alternator Failure",
+        "FaultDescription": "The alternator is no longer charging the battery, leading to electrical failures.",
+        "Precautions": "Avoid driving, as the vehicle can lose power completely without a functioning alternator.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Elecrical System",
+        "FaultCategoryAbbreviation": "ES",      
+        "Fault": "Fuses Blown",
+        "FaultDescription": "A fuse has blown, causing loss of power to certain vehicle systems (e.g., lights, AC).",
+        "Precautions": "Replace the blown fuse immediately to restore functionality.",
+        "Priority": "Low"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Braking System",
+        "FaultCategoryAbbreviation": "BS",      
+        "Fault": "Brake Fluid Low",
+        "FaultDescription": "Brake fluid is low, potentially leading to reduced braking effectiveness.",
+        "Precautions": "Top up the brake fluid as soon as possible.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Braking System",
+        "FaultCategoryAbbreviation": "BS",      
+        "Fault": "ABS Malfunction",
+        "FaultDescription": "The Anti-lock Braking System (ABS) is malfunctioning, which could reduce braking control.",
+        "Precautions": "Get the ABS system checked and repaired immediately.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Braking System",
+        "FaultCategoryAbbreviation": "BS",      
+        "Fault": "Brake Pads Worn",
+        "FaultDescription": "Brake pads have worn down to a dangerous level and need replacement.",
+        "Precautions": "Replace the brake pads immediately for optimal stopping power.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Cooling System",
+        "FaultCategoryAbbreviation": "CS",      
+        "Fault": "Coolant Leak",
+        "FaultDescription": "A coolant leak is detected, possibly causing engine overheating.",
+        "Precautions": "Do not drive the vehicle; schedule an immediate repair.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Cooling System",
+        "FaultCategoryAbbreviation": "CS",      
+        "Fault": "Radiator Blocked",
+        "FaultDescription": "Radiator is blocked, affecting the vehicle's ability to cool the engine properly.",
+        "Precautions": "Avoid driving the vehicle; get the radiator cleaned or replaced.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Air Conditioning/Climate Control",
+        "FaultCategoryAbbreviation": "AC",      
+        "Fault": "AC Not Cooling",
+        "FaultDescription": "Air conditioning is not cooling properly, possibly due to low refrigerant or compressor failure.",
+        "Precautions": "Avoid using the AC until it is fixed, as it may worsen the issue.",
+        "Priority": "Medium"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Air Conditioning/Climate Control",
+        "FaultCategoryAbbreviation": "AC",      
+        "Fault": "Heater Not Working",
+        "FaultDescription": "The heater is malfunctioning, leaving the cabin uncomfortably cold.",
+        "Precautions": "Avoid driving in extremely cold weather or use alternate heating methods.",
+        "Priority": "Low"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Fuel System",
+        "FaultCategoryAbbreviation": "FS",      
+        "Fault": "Fuel Pump Failure",
+        "FaultDescription": "The fuel pump has failed, preventing fuel from reaching the engine.",
+        "Precautions": "Do not attempt to start the vehicle; arrange for service immediately.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Fuel System",
+        "FaultCategoryAbbreviation": "FS",      
+        "Fault": "Fuel Leak",
+        "FaultDescription": "A leak in the fuel system is detected, which is a safety hazard.",
+        "Precautions": "Do not start the vehicle or operate it; arrange immediate repair.",
+        "Priority": "High"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Suspension & Steering",
+        "FaultCategoryAbbreviation": "SS",      
+        "Fault": "Suspension Spring Broken",
+        "FaultDescription": "The suspension spring is broken or malfunctioning, affecting vehicle handling.",
+        "Precautions": "Avoid driving the vehicle until the suspension is repaired.",
+        "Priority": "Medium"
+    },
+    {
+        "VehicleType": "Commercial",
+        "VehicleSubType": "any",
+        "FaultCategory": "Suspension & Steering",
+        "FaultCategoryAbbreviation": "SS",      
+        "Fault": "Steering Fluid Low",
+        "FaultDescription": "Low power steering fluid, making steering difficult.",
+        "Precautions": "Refill the steering fluid to avoid damage to the steering system.",
+        "Priority": "Medium"
+    }
+]
+  

@@ -1,0 +1,112 @@
+[ 
+ {
+	"VehicleType_id": "1",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Excavators"
+ },
+ {
+	"VehicleType_id": "2",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Bulldozers"
+ },
+ {
+	"VehicleType_id": "3",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Backhoe Loaders"
+ },
+ {
+	"VehicleType_id": "4",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Graders"
+ },
+ {
+	"VehicleType_id": "5",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Dump Trucks"
+ },
+ {
+	"VehicleType_id": "6",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Loaders"
+ },
+ {
+	"VehicleType_id": "7",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Cranes (Mobile, Truck, Crawler Cranes)"
+ },
+ {
+	"VehicleType_id": "8",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Forklifts"
+ },
+ {
+	"VehicleType_id": "9",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Pavers"
+ },
+ {
+	"VehicleType_id": "10",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Rollers (Compactors)"
+ },
+ {
+	"VehicleType_id": "11",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Cold planers"
+ },
+ {
+	"VehicleType_id": "12",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Asphalt Plants"
+ },
+ {
+	"VehicleType_id": "13",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Concrete Mixers"
+ },
+ {
+	"VehicleType_id": "14",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Concrete Pumps"
+ },
+ {
+	"VehicleType_id": "15",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Concrete Batching Plants"
+ },
+ {
+	"VehicleType_id": "16",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Pile Drivers"
+ },
+ {
+	"VehicleType_id": "17",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Drilling Rigs"
+ },
+ {
+	"VehicleType_id": "18",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Vibratory Rollers"
+ },
+ {
+	"VehicleType_id": "19",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Concrete Slipform Pavers"
+ },
+ {
+	"VehicleType_id": "20",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Shoring and Trenching Equipment"
+ },
+ {
+	"VehicleType_id": "21",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Rock Splitters"
+ },
+ {
+	"VehicleType_id": "22",
+    "VehicleType": "industrial",
+    "VehicleSubType": "Crushers"
+ }
+]

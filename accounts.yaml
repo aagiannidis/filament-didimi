@@ -1,0 +1,42 @@
+models:
+  Account:
+    first_name: string:50
+    last_name: string:50    
+    date_of_birth: date nullable
+    gender: enum:male,female,other
+    photo: string:255 nullable
+    mobile_phone: string:20 nullable
+    home_phone: string:20 nullable
+    work_phone: string:20 nullable
+    user_id: id foreignId:users.id
+    relationships:
+      belongsTo: User
+
+factories:
+  Account:
+    first_name: faker:bothify:ASSET#####
+    last_name: faker:bothify:???-### nullable
+    date_of_birth: faker:date_this_decade
+    gender: faker:randomElement:male,female,other
+    photo: faker:imageUrl
+    mobile_phone: faker:phoneNumber
+    home_phone: faker:phoneNumber
+    work_phone: faker:phoneNumber
+    user_id: faker:randomElement:1,2,3
+
+migrations:
+  Accounts:
+    - id
+    - first_name: string:50
+    - last_name: string:50    
+    - date_of_birth: date nullable
+    - gender: enum:male,female,other
+    - photo: string:255 nullable
+    - mobile_phone: string:20 nullable
+    - home_phone: string:20 nullable
+    - work_phone: string:20 nullable
+    - user_id: foreignId:users onDelete:cascade    
+    - timestamps
+    - softDeletes
+
+seeders: Account

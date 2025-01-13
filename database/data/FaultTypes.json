@@ -1,0 +1,47 @@
+[    
+ {
+	"FaultType_id": "1",
+    "FaultType": "engine",
+    "FaultAbbrev": "ENG"
+ },
+ {
+	"FaultType_id": "2",
+    "FaultType": "electrical",
+    "FaultAbbrev": "ELE"
+ },
+ {
+	"FaultType_id": "3",
+    "FaultType": "transmision",
+    "FaultAbbrev": "TSN"
+ },
+ {
+	"FaultType_id": "4",
+    "FaultType": "kinetics",
+    "FaultAbbrev": "KIN"
+ },
+ {
+	"FaultType_id": "5",
+    "FaultType": "mechanics",
+    "FaultAbbrev": "MEC"
+ },
+ {
+	"FaultType_id": "6",
+    "FaultType": "tooling",
+    "FaultAbbrev": "TOO"
+ },
+ {
+	"FaultType_id": "7",
+    "FaultType": "hydraulics",
+    "FaultAbbrev": "HYD"
+ },
+ {
+	"FaultType_id": "8",
+    "FaultType": "bodywork",
+    "FaultAbbrev": "BOD"
+ },
+ {
+	"FaultType_id": "9",
+    "FaultType": "other",
+    "FaultAbbrev": "OTH"
+ }
+]

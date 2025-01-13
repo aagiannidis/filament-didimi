@@ -1,0 +1,21 @@
+models:
+  VehicleManufacturer:
+    name: string:255
+    country: string:255
+    type: enum:commercial,industrial,other
+
+seeders: VehicleManufacturer
+    
+factories:
+  VehicleManufacturer:
+    name: faker:company
+    country: faker:country
+    type: faker:randomElement:commercial,industrial,other
+
+migrations:
+  VehicleManufacturers:
+    - id
+    - name: string:255
+    - country: string:255
+    - type: enum:commercial,industrial,other
+    - timestamps

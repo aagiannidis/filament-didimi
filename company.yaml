@@ -1,0 +1,45 @@
+models:
+  Company:
+    name: string
+    alias: string nullable
+    vat_number: string unique
+    email: string nullable
+    phone: string nullable
+    website: string nullable
+    type: enum:partner,supplier,manufacturer,service_provider
+    industry: enum:general_supplies,fuel_and_energy,parts,servicing
+    is_active: boolean default:true
+    notes: text nullable
+    tags: json nullable
+    timestamps
+
+migrations:
+  create_companies_table:
+    name: string
+    alias: string nullable
+    vat_number: string unique
+    email: string nullable
+    phone: string nullable
+    website: string nullable
+    type: enum:partner,supplier,manufacturer,service_provider
+    industry: enum:general_supplies,fuel_and_energy,parts,servicing
+    is_active: boolean default:true
+    notes: text nullable
+    tags: json nullable
+    timestamps
+
+factories:
+  Company:
+    name: company_name
+    alias: company_name_abbreviation
+    vat_number: unique:random_number:100000,999999
+    email: unique:safe_email
+    phone: phone_number
+    website: domain_name
+    type: random_element:partner,supplier,manufacturer,service_provider
+    industry: random_element:general_supplies,fuel_and_energy,parts,servicing
+    is_active: true
+    notes: optional:paragraph
+    tags: optional:json
+
+seeders: Company

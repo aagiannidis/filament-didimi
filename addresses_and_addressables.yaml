@@ -1,0 +1,70 @@
+models:
+  Address:    
+    street_address: text
+    street_number: string:50
+    unit_number: string:20
+    postal_code: string:8    
+    latitude: decimal:10,8
+    longitude: decimal:11,8    
+    additional_info: text
+    created_at: timestamp default:now
+    updated_at: timestamp default:now
+    relationships:      
+      morphedByMany: building, account
+
+  Building:
+    name: string:50 notNull
+    description: text nullable    
+    number_of_floors: unsignedInteger nullable    
+    created_at: timestamp default:now
+    updated_at: timestamp default:now
+    relationships:
+      morphToMany: addresses
+
+migrations:
+  Addresses:    
+    - id
+    - street_address: text
+    - street_number: string:20
+    - unit_number: string:20
+    - postal_code: string:8    
+    - latitude: decimal:10,8
+    - longitude: decimal:11,8    
+    - additional_info: text
+    - created_at: timestamp default:now
+    - updated_at: timestamp default:now
+
+  Buildings:
+    - id
+    - name: string:255 notNull
+    - description: text nullable    
+    - number_of_floors: unsignedInteger nullable    
+    - created_at: timestamp default:now
+    - updated_at: timestamp default:now
+
+  Addressables:
+    - id: id
+    - address_id: foreignId:addresses onDelete:cascade
+    - addressable_id: unsignedBigInteger
+    - addressable_type: string:255
+    - type: string:50 nullable
+    - is_primary: boolean default:false
+    - is_contact: boolean default:false
+    - timestamps
+
+seeders: Building, Address
+
+factories:
+  Address:
+    street_address: faker:streetAddress
+    street_number: faker:buildingNumber
+    unit_number: faker:secondaryAddress
+    postal_code: faker:postcode
+    latitude: faker:latitude
+    longitude: faker:longitude
+    additional_info: faker:text:100
+
+  Building:
+    name: faker:company
+    description: faker:catchPhrase
+    number_of_floors: faker:numberBetween:2,10

@@ -1,0 +1,51 @@
+models:
+  Vehicle:
+    license_plate: string:50 unique
+    vehicle_identification_no: string:50 unique
+    engine_serial_no: string:50 unique
+    chassis_serial_no: string:50 unique
+    vehicle_manufacturer_id: foreignId:vehicle_manufacturers
+    model: string:100
+    manufacture_date: date
+    color: string:50
+    vehicle_type: string:50
+    fuel_type: string:50
+    emission_standard: string:50
+    weight: integer
+    seats: integer
+
+seeders: Vehicle
+  
+factories:
+  Vehicle:
+    license_plate: faker:bothify:???-###
+    vehicle_identification_no: faker:uuid
+    engine_serial_no: faker:bothify:ENG#####
+    chassis_serial_no: faker:bothify:CHS#####
+    vehicle_manufacturer_id: factory:VehicleManufacturer
+    model: faker:word
+    manufacture_date: faker:date_this_decade
+    color: faker:colorName
+    vehicle_type: faker:randomElement:Sedan,SUV,Truck,Van
+    fuel_type: faker:randomElement:Petrol,Diesel,Electric,Hybrid
+    emission_standard: faker:randomElement:Euro 4,Euro 5,Euro 6
+    weight: faker:numberBetween:1000,5000
+    seats: faker:numberBetween:2,8
+
+migrations:
+  Vehicles:
+    - id
+    - license_plate: string:50 unique
+    - vehicle_identification_no: string:50 unique
+    - engine_serial_no: string:50 unique
+    - chassis_serial_no: string:50 unique
+    - vehicle_manufacturer_id: foreignId constrained
+    - model: string:100
+    - manufacture_date: date
+    - color: string:50
+    - vehicle_type: string:50
+    - fuel_type: string:50
+    - emission_standard: string:50
+    - weight: integer
+    - seats: integer
+    - timestamps

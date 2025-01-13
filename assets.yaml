@@ -1,0 +1,74 @@
+models:
+  VehicleCheck:
+    check_date: date    
+    check_type: string:50
+    check_result: enum:pass,fail
+    vehicle_id: id foreign:assets.id
+    relationships:
+      belongsTo: Asset
+    
+  VehicleRental:
+    rental_date: date
+    return_date: date nullable
+    rental_cost: decimal:10,2
+    rental_status: enum:rented,returned
+    vehicle_id: id foreign:assets.id
+    relationships:
+      belongsTo: Asset
+
+  Asset:
+    asset_reference: string:50 unique
+    license_plate: string:50 unique nullable
+    date_of_purchase: date nullable
+    cost_of_purchase: decimal:10,2 nullable
+    condition: enum:new,used,damaged
+    vehicle_id: foreignId
+    relationships:      
+      hasOne: vehicle
+      hasMany: vehicle_checks,vehicle_rentals
+
+  AssetVehicleChecks:
+    asset_id: foreignId
+    vehicle_check_id: foreignId
+    relationships:
+      belongsTo: Asset,VehicleCheck
+
+  AssetVehicleRentals:
+    asset_id: foreignId
+    vehicle_rental_id: foreignId
+    relationships:
+      belongsTo: Asset,VehicleRental
+
+factories:
+  Asset:
+    asset_reference: faker:bothify:ASSET#####
+    license_plate: faker:bothify:???-### nullable
+    date_of_purchase: faker:date_this_decade
+    cost_of_purchase: faker:numberBetween:5000,50000
+    condition: faker:randomElement:new,used,damaged
+    vehicle_id: factory:Vehicle
+
+migrations:
+  Assets:
+    - id
+    - asset_reference: string:50 unique
+    - license_plate: string:50 unique nullable
+    - date_of_purchase: date
+    - cost_of_purchase: decimal:10,2
+    - condition: enum:new,used,damaged
+    - vehicle_id: foreignId:vehicles onDelete:cascade
+    - timestamps
+
+  AssetVehicleChecks:
+    - id
+    - asset_id: foreignId:assets onDelete:cascade
+    - vehicle_check_id: foreignId:vehicle_checks onDelete:cascade
+    - timestamps
+
+  AssetVehicleRentals:
+    - id
+    - asset_id: foreignId:assets onDelete:cascade
+    - vehicle_rental_id: foreignId:vehicle_rentals onDelete:cascade
+    - timestamps
+
+seeders: VehicleCheck, VehicleRental, Asset, AssetVehicleChecks, AssetVehicleRentals

@@ -1,0 +1,15 @@
+models:
+  VehicleModel:    
+    model: string:50 unique
+    vehicle_manufacturer_id: foreignId:vehicle_manufacturers
+    relationships:
+      BelongsTo: VehicleManufacturer
+
+seeders: VehicleModel
+  
+factories: 
+  VehicleModel:
+
+migrations:
+  Vehicles:
+    

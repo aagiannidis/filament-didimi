@@ -1,0 +1,38 @@
+models:
+  RefuelingOrder:
+    user_id: id foreign:user
+    company_id: id foreign:company
+    asset_id: id foreign:asset
+    start_date: date
+    end_date: date
+    fuel_type: string
+    fuel_qty: integer
+    state: enum:created,submitted,approved_by_officer,approved_by_manager,receipt_attached,closed
+    timestamps
+    relationships:
+      belongsTo: User,Company,Asset
+
+migrations:
+  RefuelingOrders:
+    user_id: unsignedBigInteger foreign:user id
+    company_id: unsignedBigInteger foreign:company id
+    asset_id: unsignedBigInteger foreign:asset id
+    start_date: date
+    end_date: date
+    fuel_type: string
+    fuel_qty: unsignedInteger
+    state: enum:created,submitted,approved_by_officer,approved_by_manager,receipt_attached,closed
+    timestamps
+
+seeders: RefuelingOrder
+    
+factories:
+  RefuelingOrder:
+    user_id: factory:User
+    company_id: factory:Company
+    asset_id: factory:Asset
+    start_date: date:this year
+    end_date: date_modify:this year +1 week
+    fuel_type: random_element:petrol,diesel
+    fuel_qty: random_int:10,100
+    state: random_element:created,submitted,approved_by_officer,approved_by_manager,receipt_attached,closed

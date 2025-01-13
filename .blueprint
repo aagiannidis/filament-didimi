@@ -1,0 +1,28 @@
+created:
+    - database/factories/VehicleModelFactory.php
+    - database/migrations/2025_01_13_200155_create_vehicle_models_table.php
+    - app/Models/VehicleModel.php
+    - database/seeders/VehicleModelSeeder.php
+models:
+    Asset: { asset_reference: 'string:50', license_plate: 'string:50 nullable', date_of_purchase: 'date nullable', cost_of_purchase: 'decimal:10,2 nullable', condition: "enum:'new','used','damaged'", vehicle_id: 'biginteger unsigned' }
+    AssetVehicleCheck: { asset_id: 'biginteger unsigned', vehicle_check_id: 'biginteger unsigned' }
+    AssetVehicleRental: { asset_id: 'biginteger unsigned', vehicle_rental_id: 'biginteger unsigned' }
+    Category: { name: string, slug: string, is_active: boolean }
+    Permission: { name: string }
+    Role: { name: string }
+    TextMessage: { message: string, response: 'text nullable', sent_to: 'biginteger unsigned', sent_by: 'biginteger unsigned', status: "enum:'PENDING','SUCCESS','FAILED' default:PENDING", remarks: 'text nullable' }
+    Ticket: { assigned_to: 'biginteger unsigned', assigned_by: 'biginteger unsigned', title: string, description: 'text nullable', status: string, priority: string, comment: 'text nullable', attachment: 'string nullable' }
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Vehicle: { license_plate: 'string:50 unique', vehicle_identification_no: 'string:50 unique', engine_serial_no: 'string:50 unique', chassis_serial_no: 'string:50 unique', vehicle_manufacturer_id: 'foreignId:vehicle_manufacturers', model: 'string:100', manufacture_date: date, color: 'string:50', vehicle_type: 'string:50', fuel_type: 'string:50', emission_standard: 'string:50', weight: integer, seats: integer }
+    VehicleCheck: { check_date: date, check_type: 'string:50', check_result: "enum:'pass','fail'", asset_id: 'biginteger unsigned' }
+    VehicleManufacturer: { name: string, country: string, type: "enum:'commercial','industrial','other'" }
+    VehicleRental: { rental_date: date, return_date: 'date nullable', rental_cost: 'decimal:10,2', rental_status: "enum:'rented','returned'", asset_id: 'biginteger unsigned' }
+    VehicleType: { classification: 'enum:commercial,industrial,', category: 'string:20 unique,', relationships: { belongsToMany: VehicleFaultTemplate } }
+    FaultType: { category: 'enum:engine,electical,kinetics,mechanics,tooling,hydraulics,bodywork,other', abbreviation: 'enum:ENG,ELE,KIN,MEC,TOO,HYD,BOD,OTH', relationships: { belongsToMany: VehicleFaultTemplate } }
+    VehicleFaultTemplate: { vehicle_type_uid: 'foreignId(vehicle_types) nullable', fault_type_uid: 'foreignId(fault_types) nullable', title: 'string:50', description: 'text nullable', description_gr: 'text nullable', precautions: 'text nullable', precautions_gr: 'text nullable', priority: 'enum:low,medium,high', relationships: { HasMany: 'VehicleType, FaultType' } }
+    Account: { first_name: 'string:50', last_name: 'string:50', date_of_birth: 'date nullable', gender: 'enum:male,female,other', photo: 'string:255 nullable', mobile_phone: 'string:20 nullable', home_phone: 'string:20 nullable', work_phone: 'string:20 nullable', user_id: 'id foreignId:users.id', relationships: { belongsTo: User } }
+    Address: { street_address: text, street_number: 'string:50', unit_number: 'string:20', postal_code: 'string:8', latitude: 'decimal:10,8', longitude: 'decimal:11,8', additional_info: text, created_at: 'timestamp default:now', updated_at: 'timestamp default:now', relationships: { morphedByMany: 'building, account' } }
+    Building: { name: 'string:50 notNull', description: 'text nullable', number_of_floors: 'unsignedInteger nullable', created_at: 'timestamp default:now', updated_at: 'timestamp default:now', relationships: { morphToMany: addresses } }
+    RefuelingOrder: { user_id: 'id foreign:user', company_id: 'id foreign:company', asset_id: 'id foreign:asset', start_date: date, end_date: date, fuel_type: string, fuel_qty: integer, state: 'enum:created,submitted,approved_by_officer,approved_by_manager,receipt_attached,closed', timestamps: timestamps, relationships: { belongsTo: 'User,Company,Asset' } }
+    Company: { name: string, alias: 'string nullable', vat_number: 'string unique', email: 'string nullable', phone: 'string nullable', website: 'string nullable', type: 'enum:partner,supplier,manufacturer,service_provider', industry: 'enum:general_supplies,fuel_and_energy,parts,servicing', is_active: 'boolean default:true', notes: 'text nullable', tags: 'json nullable', timestamps: timestamps }
+    VehicleModel: { model: 'string:50 unique', vehicle_manufacturer_id: 'foreignId:vehicle_manufacturers', relationships: { BelongsTo: VehicleManufacturer } }
