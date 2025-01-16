@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Models\VehicleModel;
+use App\Models\VehicleManufacturer;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Vehicle extends Model
@@ -51,7 +53,7 @@ class Vehicle extends Model
         'engine_serial_no',
         'chassis_serial_no',
         'vehicle_manufacturer_id',
-        'model',
+        'vehicle_model_id',
         'manufacture_date',
         'color',
         'vehicle_type',
@@ -71,9 +73,19 @@ class Vehicle extends Model
         'manufacture_date' => 'date',
     ];
 
-    public function models(): HasMany
+    // public function models(): HasMany
+    // {
+    //     return $this->hasMany(VehicleModel::class);
+    // }
+
+    public function manufacturer(): BelongsTo
     {
-        return $this->hasMany(VehicleModel::class);
+        return $this->belongsTo(VehicleManufacturer::class,'vehicle_manufacturer_id','id');
+    }
+
+    public function model(): BelongsTo
+    {
+        return $this->belongsTo(VehicleModel::class,'vehicle_model_id','id');
     }
 
 }

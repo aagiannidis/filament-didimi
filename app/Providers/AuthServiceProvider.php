@@ -13,7 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        \Parallax\FilamentComments\Policies\FilamentComment::class => \Parallax\FilamentComments\Policies\FilamentCommentPolicy::class,
+        
     ];
 
     /**

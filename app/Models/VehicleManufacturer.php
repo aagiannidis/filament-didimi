@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\VehicleModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VehicleManufacturer extends Model
 {
@@ -35,4 +37,9 @@ class VehicleManufacturer extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public function vehicleModels(): HasMany
+    {
+        return $this->hasMany(VehicleModel::class);
+    }
 }

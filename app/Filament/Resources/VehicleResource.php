@@ -5,8 +5,11 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Vehicle;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\VehicleModel;
 use Forms\Components\Select;
 use Filament\Resources\Resource;
 use App\Models\VehicleManufacturer;
@@ -42,13 +45,25 @@ class VehicleResource extends Resource
                     ->required()
                     ->maxLength(50),
                 Forms\Components\Select::make('vehicle_manufacturer_id')
-                    ->options(
-                        VehicleManufacturer::all()->pluck('name', 'id')->toArray()
-                    )                    
+                    // ->options(
+                    //     VehicleManufacturer::all()->pluck('name', 'id')->toArray()
+                    // )         
+                    ->live()                               
+                    ->relationship(name: 'manufacturer', titleAttribute:'name')
+                    ->preload() 
+                    ->afterStateUpdated(function (Set $set, ?string $state) { 
+                            $set('vehicle_model_id', -1);                            
+                        })                   
                     ->required(),                    
-                Forms\Components\TextInput::make('model')
-                    ->required()
-                    ->maxLength(100),
+                Forms\Components\Select::make('vehicle_model_id')
+                    ->label('Model')                    
+                    ->options(function(Get $get){
+                            $selectedManufId = $get('vehicle_manufacturer_id');
+                            if ($selectedManufId) {
+                                return VehicleModel::where('vehicle_manufacturer_id',$selectedManufId)->pluck('model','id')->toArray();
+                            }                    
+                        })                       
+                    ->required(),
                 Forms\Components\DatePicker::make('manufacture_date')
                     ->label('Date of manufacture')
                     ->required(),
@@ -88,9 +103,11 @@ class VehicleResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('chassis_serial_no')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('vehicle_manufacturer_id')
+                Tables\Columns\TextColumn::make('manufacturer.name')
+                    ->label('Manufacturer')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('model')
+                Tables\Columns\TextColumn::make('model.model')
+                    ->label('Model')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('manufacture_date')
                     ->date()

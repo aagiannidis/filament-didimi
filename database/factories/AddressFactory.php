@@ -36,9 +36,9 @@ class AddressFactory extends Factory
         
         return [
             'street_address' => self::$streetNames[rand(1,count(self::$streetNames)-1)],
-            'street_number' => $this->faker->regexify('[A-Za-z0-9]{50}'),
-            'unit_number' => $this->faker->regexify('[A-Za-z0-9]{20}'),
-            'postal_code' => substr($this->faker->postcode(),0,6),
+            'street_number' => $this->faker->numberBetween(1,160),
+            'unit_number' => $this->faker->numberBetween(1,10),
+            'postal_code' => $this->faker->numberBetween(12500,16000),
             'latitude' => $this->faker->latitude(),
             'longitude' => $this->faker->longitude(),
             'additional_info' => $this->faker->text(),

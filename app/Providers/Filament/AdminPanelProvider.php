@@ -52,6 +52,9 @@ class AdminPanelProvider extends PanelProvider
             ->plugins([
                 EmailTemplatesPlugin::make(),               
             ])
+            ->resources([
+                config('filament-logger.activity_resource')
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

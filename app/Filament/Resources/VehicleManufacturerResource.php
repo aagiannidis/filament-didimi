@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\VehicleManufacturerResource\Pages;
 use App\Filament\Resources\VehicleManufacturerResource\RelationManagers;
+use App\Filament\Resources\VehicleManufacturerResource\RelationManagers\ModelsRelationManager;
 
 class VehicleManufacturerResource extends Resource
 {
@@ -76,7 +77,7 @@ class VehicleManufacturerResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ModelsRelationManager::class,
         ];
     }
 
@@ -85,7 +86,7 @@ class VehicleManufacturerResource extends Resource
         return [
             'index' => Pages\ListVehicleManufacturers::route('/'),
             'create' => Pages\CreateVehicleManufacturer::route('/create'),
-            //'view' => Pages\ViewVehicleManufacturer::route('/{record}'),
+            'view' => Pages\ViewVehicleManufacturer::route('/{record}'),
             'edit' => Pages\EditVehicleManufacturer::route('/{record}/edit'),
         ];
     }

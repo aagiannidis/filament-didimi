@@ -4,16 +4,20 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use Filament\Infolists;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Forms\Components\Select;
 use App\Models\VehicleRental;
 use Forms\Components\TextInput;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Forms\Components\DatePicker;
+use Infolists\Components\TextEntry;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\VehicleRentalResource\Pages;
+use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
 use App\Filament\Resources\VehicleRentalResource\RelationManagers;
 
 class VehicleRentalResource extends Resource
@@ -21,6 +25,19 @@ class VehicleRentalResource extends Resource
     protected static ?string $model = VehicleRental::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([                
+                Infolists\Components\TextEntry::make('rental_date'),
+                Infolists\Components\TextEntry::make('return_date'),
+                Infolists\Components\TextEntry::make('rental_cost'),
+                Infolists\Components\TextEntry::make('rental_status'),                  
+                Infolists\Components\TextEntry::make('asset.license_plate'),
+                CommentsEntry::make('filament_comments'),
+            ]);
+    }
 
     public static function form(Form $form): Form
     {
