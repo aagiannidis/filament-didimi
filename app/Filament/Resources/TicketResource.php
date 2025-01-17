@@ -66,13 +66,13 @@ class TicketResource extends Resource
                     ->options(self::$model::PRIORITY)
                     ->required()
                     ->in(self::$model::PRIORITY),
-                Select::make('assigned_to')
-                    ->options(
-                        User::whereHas('roles', function (Builder $query) {
-                            $query->where('name', Role::ROLES['Agent']);
-                        })->pluck('name', 'id')->toArray(),
-                    )
-                    ->required(),
+                // Select::make('assigned_to')
+                //     ->options(
+                //         User::whereHas('roles', function (Builder $query) {
+                //             $query->where('name', Role::ROLES['Agent']);
+                //         })->pluck('name', 'id')->toArray(),
+                //     )
+                //     ->required(),
                 Textarea::make('comment')
                     ->rows(3),
                 FileUpload::make('attachment')

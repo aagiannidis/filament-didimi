@@ -12,6 +12,7 @@
         "awcodes/filament-quick-create": "^3.6",
         "barryvdh/laravel-dompdf": "^3.0",
         "bezhansalleh/filament-language-switch": "^3.1",
+        "bezhansalleh/filament-shield": "^3.3",
         "codewithdennis/filament-factory-action": "^3.0",
         "filament/filament": "^3.0-stable",
         "flowframe/laravel-trend": "^0.2.0",
@@ -25,6 +26,9 @@
         "parallax/filament-comments": "^1.4",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-activitylog": "^4.9",
+        "spatie/laravel-permission": "^6.10",
+        "stechstudio/filament-impersonate": "^3.15",
+        "tomatophp/filament-users": "^2.0",
         "visualbuilder/email-templates": "^3.1",
         "z3d0x/filament-logger": "^0.7.3"
     },

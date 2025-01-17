@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
+use TomatoPHP\FilamentUsers\Facades\FilamentUser;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
             $switch
                 ->locales(['en','gr']); // also accepts a closure
         });
+        
+        FilamentUser::register([
+            \Filament\Resources\RelationManagers\RelationManager::make() // Replace with your custom relation manager
+        ]);
     }
 }

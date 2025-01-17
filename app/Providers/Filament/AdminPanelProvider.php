@@ -50,7 +50,9 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\FilamentInfoWidget::class,
             ])
             ->plugins([
-                EmailTemplatesPlugin::make(),               
+                EmailTemplatesPlugin::make(),                 
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(), 
+                \TomatoPHP\FilamentUsers\FilamentUsersPlugin::make(), 
             ])
             ->resources([
                 config('filament-logger.activity_resource')

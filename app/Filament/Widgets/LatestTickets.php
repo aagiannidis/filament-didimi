@@ -20,7 +20,8 @@ class LatestTickets extends BaseWidget
     {
         return $table
             ->query(
-                auth()->user()->hasRole(Role::ROLES['Admin']) ? Ticket::query() : Ticket::where('assigned_to', auth()->id())
+                //auth()->user()->hasRole(Role::ROLES['Admin']) ? Ticket::query() : Ticket::where('assigned_to', auth()->id())
+                Ticket::query()
             )
             ->columns([
                 TextColumn::make('title')

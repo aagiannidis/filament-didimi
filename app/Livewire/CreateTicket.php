@@ -63,7 +63,7 @@ class CreateTicket extends Component implements HasForms
                 Select::make('assigned_to')
                     ->options(
                         User::whereHas('roles', function (Builder $query) {
-                            $query->where('name', Role::ROLES['Agent']);
+                            $query->where('name', \App\Models\Role::ROLES['Agent']);
                         })->pluck('name', 'id')->toArray(),
                     )
                     ->required(),

@@ -19,9 +19,9 @@ class StatsOverview extends BaseWidget
         return [
             Stat::make('Total Tickets', Ticket::count()),
             Stat::make('Total Categories', Category::where('is_active', true)->count()),
-            Stat::make('Total Agents', User::whereHas('roles', function (Builder $query) {
-                $query->where('name', Role::ROLES['Agent']);
-            })->count()),
+            // Stat::make('Total Agents', User::whereHas('roles', function (Builder $query) {
+            //     $query->where('name', Role::ROLES['Agent']);
+            // })->count()),
         ];
     }
 }
