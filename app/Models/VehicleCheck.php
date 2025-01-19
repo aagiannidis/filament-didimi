@@ -2,17 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Tags\Tag;
+use Spatie\Tags\HasTags;
+use Spatie\Image\Enums\Fit;
+use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class VehicleCheck extends Model
+class VehicleCheck extends Model implements HasMedia
 {
-    use HasFactory;
-    
-    const CHECK_RESULTS = [                
+    use HasFactory, InteractsWithMedia, HasTags;
+
+    const CHECK_RESULTS = [
         'pass' => 'Pass',
-        'fail' => 'Fail',        
+        'fail' => 'Fail',
     ];
 
     /**
@@ -23,7 +30,7 @@ class VehicleCheck extends Model
     protected $fillable = [
         'check_date',
         'check_type',
-        'check_result',        
+        'check_result',
         'asset_id',
     ];
 
@@ -39,9 +46,29 @@ class VehicleCheck extends Model
         'asset_id' => 'integer',
     ];
 
+    public $localdata;
+
+    protected static function boot() {
+        parent::boot();
+        $localdata = self::getKteoTags();
+    }
+
+    public static function getKteoTags() : string {
+        return 'in:' . implode(',',Tag::where('type', 'kteo_tags')->pluck('id')->toArray());
+    }
+
+
     public function asset(): BelongsTo
     {
         return $this->belongsTo(Asset::class);
     }
-    
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('preview')
+            ->fit(Fit::Contain, 300, 300)
+            ->nonQueued();
+    }
+
 }

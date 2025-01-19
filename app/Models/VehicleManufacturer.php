@@ -42,4 +42,5 @@ class VehicleManufacturer extends Model
     {
         return $this->hasMany(VehicleModel::class);
     }
+
 }

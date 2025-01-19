@@ -36,28 +36,14 @@ class TicketResource extends Resource
 
     public static function form(Form $form): Form
     {
-        
-        return $form            
-            ->columns(1)            
+
+        return $form
+            ->columns(1)
             ->schema([
-                TextInput::make('title')                    
+                TextInput::make('title')
                     ->translateLabel()
                     ->autofocus()
                     ->required(),
-                Select::make('vehicle_fault_template_id')                    
-                    ->translateLabel()
-                    ->relationship(name: 'vehicleFaultTemplate', titleAttribute: 'title')
-                    ->live()
-                    ->preload()
-                    ->afterStateUpdated(function (Set $set, ?string $state) { 
-                        $set('description', VehicleFaultTemplate::find($state)->description);
-                        $set('precautions', VehicleFaultTemplate::find($state)->precautions);
-                        })
-                    ->hiddenOn('view'),
-                Textarea::make('description')
-                    ->rows(3),
-                TextInput::make('precautions')                    
-                    ->readonly(),
                 Select::make('status')
                     ->options(self::$model::STATUS)
                     ->required()
@@ -66,6 +52,23 @@ class TicketResource extends Resource
                     ->options(self::$model::PRIORITY)
                     ->required()
                     ->in(self::$model::PRIORITY),
+                Select::make('vehicle_fault_template_id')
+                    ->translateLabel()
+                    ->columnSpanFull()
+                    ->relationship(name: 'vehicleFaultTemplate', titleAttribute: 'title')
+                    ->live()
+                    ->preload()
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        $set('description', VehicleFaultTemplate::find($state)->description);
+                        $set('precautions', VehicleFaultTemplate::find($state)->precautions);
+                        })
+                    ->hiddenOn('view'),
+                Textarea::make('description')
+                    ->columnSpanFull()
+                    ->rows(3),
+                TextInput::make('precautions')
+                    ->columnSpanFull()
+                    ->readonly(),
                 // Select::make('assigned_to')
                 //     ->options(
                 //         User::whereHas('roles', function (Builder $query) {
@@ -74,14 +77,16 @@ class TicketResource extends Resource
                 //     )
                 //     ->required(),
                 Textarea::make('comment')
+                    ->columnSpanFull()
                     ->rows(3),
                 FileUpload::make('attachment')
+                    ->columnSpanFull(),
                     // ->deletable(false)
                     // ->downloadable()
                     // ->avatar()
                     // ->imageEditor()
                     // ->circleCropper()
-                    // ->uploadingMessage('Uploading your photo...')                    
+                    // ->uploadingMessage('Uploading your photo...')
                     // ->image()
                     // ->getUploadedFileNameForStorageUsing(
                     //     fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
@@ -92,19 +97,20 @@ class TicketResource extends Resource
                     // ->visibility('private')
                     // ->storeFileNamesIn('attachment_file_names')
                     // ->moveFiles()
-                    
-    
 
-            ]);
+
+
+            ])
+            ->columns(3);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn(Builder $query) =>
-                auth()->user()->hasRole(Role::ROLES['Admin']) ?
-                $query : $query->where('assigned_to', auth()->id())
-            )
+            // ->modifyQueryUsing(fn(Builder $query) =>
+            //     auth()->user()->hasRole(Role::ROLES['Admin']) ?
+            //     $query : $query->where('assigned_to', auth()->id())
+            // )
             ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('title')
@@ -163,7 +169,7 @@ class TicketResource extends Resource
     {
         return [
             'index' => Pages\ListTickets::route('/'),
-            'create' => Pages\CreateTicket::route('/create'),            
+            'create' => Pages\CreateTicket::route('/create'),
             'edit' => Pages\EditTicket::route('/{record}/edit'),
         ];
     }

@@ -14,12 +14,23 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\VehicleManufacturerResource\Pages;
 use App\Filament\Resources\VehicleManufacturerResource\RelationManagers;
 use App\Filament\Resources\VehicleManufacturerResource\RelationManagers\ModelsRelationManager;
+use Guava\FilamentKnowledgeBase\Contracts\HasKnowledgeBase;
+use Guava\FilamentKnowledgeBase\Facades\KnowledgeBase;
 
-class VehicleManufacturerResource extends Resource
+class VehicleManufacturerResource extends Resource implements HasKnowledgeBase
 {
     protected static ?string $model = VehicleManufacturer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function getDocumentation(): array
+    {
+        return [
+            'prologue.getting-started',
+            // 'users.authentication',
+            // KnowledgeBase::model()::find('users.permissions'),
+        ];
+    }
 
     public static function form(Form $form): Form
     {
@@ -59,7 +70,7 @@ class VehicleManufacturerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('type')                    
+                Tables\Filters\SelectFilter::make('type')
                     ->options(self::$model::TYPES)
                     ->placeholder('Filter By Type'),
             ])
@@ -90,4 +101,13 @@ class VehicleManufacturerResource extends Resource
             'edit' => Pages\EditVehicleManufacturer::route('/{record}/edit'),
         ];
     }
+
+
+
+    // public static function getDocumentation(): array
+    // {
+    //     return [
+    //         'prologue.getting-started',
+    //     ];
+    // }
 }

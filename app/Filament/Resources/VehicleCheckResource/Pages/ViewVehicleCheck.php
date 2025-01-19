@@ -16,4 +16,5 @@ class ViewVehicleCheck extends ViewRecord
             Actions\EditAction::make(),
         ];
     }
+    
 }

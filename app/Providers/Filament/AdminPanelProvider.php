@@ -9,6 +9,7 @@ use Filament\Support\Colors\Color;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Guava\FilamentKnowledgeBase\KnowledgeBasePlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -50,9 +51,12 @@ class AdminPanelProvider extends PanelProvider
                 // Widgets\FilamentInfoWidget::class,
             ])
             ->plugins([
-                EmailTemplatesPlugin::make(),                 
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(), 
-                \TomatoPHP\FilamentUsers\FilamentUsersPlugin::make(), 
+                EmailTemplatesPlugin::make(),
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
+                \TomatoPHP\FilamentUsers\FilamentUsersPlugin::make(),
+                KnowledgeBasePlugin::make()
+                    ->modalPreviews()
+                    ->slideOverPreviews(),
             ])
             ->resources([
                 config('filament-logger.activity_resource')
