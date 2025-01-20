@@ -11,8 +11,10 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Models\VehicleCheck;
 use Forms\Components\Select;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
+use Infolists\Components\TextEntry;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
@@ -20,19 +22,83 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\MultiSelect;
+use Filament\Infolists\Components\BadgeEntry;
 use Filament\Tables\Columns\SpatieTagsColumn;
 use Filament\Forms\Components\SpatieTagsInput;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\VehicleCheckResource\Pages;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Infolists\Components\SpatieMediaLibraryFileEntry;
 use App\Filament\Resources\VehicleCheckResource\RelationManagers;
+use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
+use Filament\Infolists\Components\TextEntry as ComponentsTextEntry;
 
 class VehicleCheckResource extends Resource
 {
     protected static ?string $model = VehicleCheck::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                \Filament\Infolists\Components\TextEntry::make('asset.license_plate'),
+                \Filament\Infolists\Components\TextEntry::make('check_result'),
+                \Filament\Infolists\Components\TextEntry::make('check_date'),
+                \Filament\Infolists\Components\TextEntry::make('check_type'),
+                \Filament\Infolists\Components\TextEntry::make('tags')
+                    ->label('Tags')
+                    ->formatStateUsing(fn ($state, $record) =>
+                        $record->tags->pluck('name')->join(', ')
+                    )
+                    ->placeholder('No tags assigned'),
+                // Infolists\Components\TextEntry::make('return_date'),
+                // Infolists\Components\TextEntry::make('rental_cost'),
+                // Infolists\Components\TextEntry::make('rental_status'),
+                // Infolists\Components\TextEntry::make('asset.license_plate'),
+                // CommentsEntry::make('filament_comments'),
+                \Filament\Infolists\Components\RepeatableEntry::make('media')
+                    ->label('Documents')
+                    ->translateLabel()
+                    ->schema([
+                        \Filament\Infolists\Components\TextEntry::make('name'),
+                        \Filament\Infolists\Components\TextEntry::make('file_name')
+                            ->tooltip('Download the file here...')
+                            ->formatStateUsing(fn ($state, $record) => 
+                                "<a href='{$record->getFullUrl()}' target='_blank'><i class='fa fa-download'></i> {$record->name}</a>"
+                            )
+                            ->icon('heroicon-o-folder-arrow-down')
+                        // "<a href='{$media->getFullUrl()}' target='_blank'>{$media->name}</a>"
+                        //     ->formatStateUsing(fn ($state, $record) =>
+                        //         $record->getMedia('certificates')->map(fn ($media) =>
+                        //             "<a href='{$media->getFullUrl()}' target='_blank'>{$media->name}</a>"
+                        //         )->join(', '))
+                            ->html(), // Render links as HTML
+                        //     ->formatStateUsing(fn ($state) => strip_tags($state)),
+                        // \Filament\Infolists\Components\TextEntry::make('created_at')
+                        //     ->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->diffForHumans()),
+                    ])
+                    ->columns(3),
+
+
+                \Filament\Infolists\Components\RepeatableEntry::make('filamentComments')
+                    ->label('Recent Comments')
+                    ->translateLabel()
+                    ->schema([
+                        \Filament\Infolists\Components\TextEntry::make('user.name'),
+                        \Filament\Infolists\Components\TextEntry::make('comment')
+                            ->formatStateUsing(fn ($state) => strip_tags($state)),
+                        \Filament\Infolists\Components\TextEntry::make('created_at')
+                            //->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->diffForHumans()),
+                            ->since()
+                            ->dateTimeTooltip(),
+                    ])
+                    ->columns(3)
+            ])
+            ->columns(1);
+    }
 
     public static function form(Form $form): Form
     {

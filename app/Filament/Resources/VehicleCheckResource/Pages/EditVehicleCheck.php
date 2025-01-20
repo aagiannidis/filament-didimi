@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources\VehicleCheckResource\Pages;
 
-use App\Filament\Resources\VehicleCheckResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
+use App\Filament\Resources\VehicleCheckResource;
+use Parallax\FilamentComments\Actions\CommentsAction;
 
 class EditVehicleCheck extends EditRecord
 {
@@ -13,6 +14,7 @@ class EditVehicleCheck extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
+            CommentsAction::make(),
             Actions\ViewAction::make(),
             Actions\DeleteAction::make(),
         ];
