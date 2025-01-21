@@ -17,19 +17,51 @@ class BuildingResource extends Resource
 {
     protected static ?string $model = Building::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationGroup = 'Property Management';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(50),
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('number_of_floors')
-                    ->numeric(),                
+                Forms\Components\Card::make()
+                    ->schema([
+                        Forms\Components\TextInput::make('code')
+                            ->required()
+                            ->maxLength(10)
+                            ->unique(ignoreRecord: true),
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('description')
+                            ->required()
+                            ->maxLength(255),                        
+                        Forms\Components\TextInput::make('total_floors')
+                            ->required()
+                            ->numeric()
+                            ->minValue(1),
+                        Forms\Components\TextInput::make('total_capacity')
+                            ->required()
+                            ->numeric()
+                            ->minValue(0),
+                        Forms\Components\TextInput::make('current_occupancy')
+                            ->required()
+                            ->numeric()
+                            ->minValue(0),
+                        Forms\Components\Select::make('status')
+                            ->required()
+                            ->options([
+                                'ACTIVE' => 'Active',
+                                'MAINTENANCE' => 'Under Maintenance',
+                                'INACTIVE' => 'Inactive',
+                            ])
+                            ->default('ACTIVE'),
+                        Forms\Components\Select::make('manager_id')
+                            ->relationship('manager', 'name')
+                            ->searchable()
+                            ->preload(),
+                    ])
+                    ->columns(2),
             ]);
     }
 
@@ -37,31 +69,40 @@ class BuildingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('number_of_floors')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('code')
+                    ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->sortable(),                
+                Tables\Columns\TextColumn::make('total_floors')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('current_occupancy')
+                    ->sortable(),
+                Tables\Columns\BadgeColumn::make('status')
+                    ->colors([
+                        'success' => 'ACTIVE',
+                        'warning' => 'MAINTENANCE',
+                        'danger' => 'INACTIVE',
+                    ]),
+                Tables\Columns\TextColumn::make('manager.name')
+                    ->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                        'ACTIVE' => 'Active',
+                        'MAINTENANCE' => 'Under Maintenance',
+                        'INACTIVE' => 'Inactive',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
 
@@ -69,6 +110,7 @@ class BuildingResource extends Resource
     {
         return [
             \App\Filament\Resources\BuildingResource\RelationManagers\AddressesRelationManager::class,
+            \App\Filament\Resources\BuildingResource\RelationManagers\FloorsRelationManager::class,
         ];
     }
 
@@ -80,5 +122,10 @@ class BuildingResource extends Resource
             'view' => Pages\ViewBuilding::route('/{record}'),
             'edit' => Pages\EditBuilding::route('/{record}/edit'),
         ];
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['name', 'code'];
     }
 }

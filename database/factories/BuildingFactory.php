@@ -2,32 +2,58 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Building;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BuildingFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
     protected $model = Building::class;
 
-    /**
-     * Define the model's default state.
-     */
-    public function definition(): array
+    public function definition()
     {
-        
-
         return [
-            'name' => $this->faker->name(),
-            'description' => $this->faker->text(),
-            'number_of_floors' => rand(2,8),
-            'created_at' => $this->faker->dateTime(),
-            'updated_at' => $this->faker->dateTime(),
+            //'id' => $this->faker->uuid(),
+            'code' => function (array $attributes) {
+                return strtoupper(substr($attributes['name'] ?? $this->faker->company(), 0, 1));
+            },
+            'name' => $this->faker->company(),
+            // 'address' => $this->faker->streetAddress(),
+            // 'city' => $this->faker->city(),
+            // 'country' => $this->faker->country(),
+            'total_floors' => $this->faker->numberBetween(1, 6),
+            'total_capacity' => function (array $attributes) {
+                return $attributes['total_floors'] * $this->faker->numberBetween(20, 40);
+            },
+            'current_occupancy' => function (array $attributes) {
+                return (int) ($attributes['total_capacity'] * $this->faker->numberBetween(60, 90) / 100);
+            },
+            'status' => $this->faker->randomElement(['ACTIVE', 'MAINTENANCE', 'INACTIVE']),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
+    }
+
+    /**
+     * Configure the model factory.
+     *
+     * @return $this
+     */
+    public function configure()
+    {
+        return $this->afterCreating(function (Building $building) {
+            // This ensures any floors created are properly associated
+            if ($building->floors()->count() === 0) {
+                $building->floors()->createMany(
+                    Floor::factory()
+                        ->count($building->total_floors)
+                        ->make()
+                        ->map(function ($floor, $index) {
+                            $floor->number = $index + 1;
+                            return $floor;
+                        })
+                        ->toArray()
+                );
+            }
+        });
     }
 }
