@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Room;
 use App\Models\Floor;
+use App\Models\WallPort;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RoomFactory extends Factory
@@ -35,7 +36,7 @@ class RoomFactory extends Factory
 
         return [
             //'id' => $this->faker->uuid(),
-            'floor_id' => Floor::random()->id ?? 1,
+            'floor_id' => Floor::inRandomOrder()->first()->id ?? 1,
             'number' => function (array $attributes) {
                 $floor = Floor::find($attributes['floor_id']);
                 return $floor->number . str_pad($this->faker->unique()->numberBetween(1, 99), 2, '0', STR_PAD_LEFT);
@@ -126,14 +127,14 @@ class RoomFactory extends Factory
     {
         return $this->afterCreating(function (Room $room) {
             // This ensures any floors created are properly associated
-            
+
                 $room->wallPorts()->createMany(
                     WallPort::factory()
                         ->count($this->faker->numberBetween(4, 10))
-                        ->make()                        
+                        ->make()
                         ->toArray()
                 );
-            
+
         });
     }
 }

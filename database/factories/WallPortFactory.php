@@ -26,11 +26,11 @@ class WallPortFactory extends Factory
         $location = $this->faker->randomElement(['NORTH', 'SOUTH', 'EAST', 'WEST']);
 
         return [
-            'room_id' => Room::random()->id ?? 1,
+            'room_id' => Room::inRandomOrder()->first()->id ?? 1,
             'port_number' => function (array $attributes) {
                 $room = Room::find($attributes['room_id']);
                 $portCount = WallPort::where('room_id', $room->id)->count();
-                return sprintf('%s-W-%02d', $room->number, $portCount + 1);
+                return sprintf('%s-W-%02d', $room->number, $portCount + $this->faker->numberBetween(676,1584));
             },
             'type' => $type,
             'location' => $location,

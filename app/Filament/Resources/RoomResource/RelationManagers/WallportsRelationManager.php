@@ -66,16 +66,19 @@ class WallPortsRelationManager extends RelationManager
                 TextColumn::make('port_number')
                     ->sortable()
                     ->searchable(),
-                BadgeColumn::make('type')
+                TextColumn::make('type')
+                    ->badge()
                     ->colors([
                         'primary' => 'DATA',
                         'success' => 'VOICE',
                     ]),
-                BadgeColumn::make('location')
+                TextColumn::make('location')
+                    ->badge()
                     ->colors([
                         'primary',
                     ]),
-                BadgeColumn::make('status')
+                TextColumn::make('status')
+                    ->Badge()
                     ->colors([
                         'success' => 'ACTIVE',
                         'warning' => 'INACTIVE',

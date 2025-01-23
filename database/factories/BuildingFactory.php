@@ -13,10 +13,12 @@ class BuildingFactory extends Factory
     {
         return [
             //'id' => $this->faker->uuid(),
+            'name' => $this->faker->company(),
+            'description' => '',
             'code' => function (array $attributes) {
                 return strtoupper(substr($attributes['name'] ?? $this->faker->company(), 0, 1));
             },
-            'name' => $this->faker->company(),
+
             // 'address' => $this->faker->streetAddress(),
             // 'city' => $this->faker->city(),
             // 'country' => $this->faker->country(),

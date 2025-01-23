@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Floor;
 use App\Models\Building;
+use App\Models\Room;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class FloorFactory extends Factory
@@ -16,12 +17,12 @@ class FloorFactory extends Factory
 
         return [
             // 'id' => $this->faker->uuid(),
-            'building_id' => Building::random()->id ?? 1,
+            'building_id' => Building::inRandomOrder()->first()->id ?? 1,
             'number' => $floorNumber++,
             'name' => function (array $attributes) {
                 $suffixes = ['st', 'nd', 'rd', 'th'];
-                $suffix = $attributes['number'] <= 3 ? 
-                    $suffixes[$attributes['number'] - 1] : 
+                $suffix = $attributes['number'] <= 3 ?
+                    $suffixes[$attributes['number'] - 1] :
                     $suffixes[3];
                 return $attributes['number'] . $suffix . ' Floor';
             },
@@ -83,7 +84,7 @@ class FloorFactory extends Factory
                     //     return $room;
                     // })
                     ->toArray()
-            );        
+            );
         });
     }
 }

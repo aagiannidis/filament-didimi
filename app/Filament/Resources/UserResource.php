@@ -19,6 +19,7 @@ use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use STS\FilamentImpersonate\Tables\Actions\Impersonate;
+use App\Filament\Resources\UserResource\RelationManagers\TasksRelationManager;
 
 class UserResource extends Resource
 {
@@ -90,7 +91,7 @@ class UserResource extends Resource
 
     public static function table(Table $table): Table
     {
-        if(class_exists( STS\FilamentImpersonate\Tables\Actions\Impersonate::class) && config('filament-users.impersonate')){
+        if(class_exists( Impersonate::class) && config('filament-users.impersonate')){
             $table->actions([Impersonate::make('impersonate')]);
         }
         $table
@@ -136,6 +137,13 @@ class UserResource extends Resource
                 ]),
             ]);
         return $table;
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            TasksRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
