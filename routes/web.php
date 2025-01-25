@@ -9,22 +9,22 @@ use App\Jobs\GenerateFuelOrderJob;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
-    
+
     $toEmail = 'a.agiannidis@gmail.com';
     $data = [
         'subject' => 'Welcome Email',
         'body' => 'This is a test email sent from the Laravel application.',
     ];
-    
+
     try {
         // Mail::raw($data['body'], function ($message) use ($toEmail, $data) {
         //     $message->to($toEmail)
         //             ->subject($data['subject']);
         // });
-    
+
         // // Send the email
         //Mail::to($toEmail)->send(new UserLogin(user::first()));
-    
+
         // Return a JSON response indicating success
         return response()->json([
             'message' => 'Email sent successfully.',
@@ -56,7 +56,7 @@ Route::get('login', Livewire\UserLogin::class)->name('login');
 
 
 Route::get('/pdf', function () {
-   
+
     //return view('templates.pdf.RefuelingOrder');
 
     // try {
@@ -70,7 +70,7 @@ Route::get('/pdf', function () {
     //     return view('templates.pdf.RefuelingOrder', compact('data'));
     //     //return  Pdf::loadView('templates.pdf.RefuelingOrder', compact('data'))->setPaper('a4', 'landscape')->download('invoice.pdf');
     //     //return $pdf->download('invoice.pdf');
-        
+
     // } catch (\Exception $e) {
     //     // Return a JSON response indicating failure
     //     return response()->json([
@@ -80,23 +80,23 @@ Route::get('/pdf', function () {
     // }
 
     $data = [
-        'user_id' => 1,
+        'user_id' => 3,
         'report_id' => 21,
-        'include_charts' => true,        
+        'include_charts' => true,
         'title' => 'Monthly Sales',
         'items' => [
             ['product' => 'Laptop',  'quantity' => 10],
             ['product' => 'Monitor', 'quantity' => 5],
         ],
     ];
-    
+
 
     //GenerateFuelOrderJob::dispatch($data);
     dispatch(new GenerateFuelOrderJob($data));
 
     return response()->json(['message' => 'Job dispatched']);
 
-    
+
 });
 
 Route::get('login', Livewire\UserLogin::class)->name('login');

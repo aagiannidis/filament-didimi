@@ -107,6 +107,9 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->label(trans('filament-users::user.resource.email')),
+                TextColumn::make('roles.name')
+                    ->sortable()
+                    ->searchable(),
                 IconColumn::make('email_verified_at')
                     ->boolean()
                     ->sortable()
@@ -133,7 +136,8 @@ class UserResource extends Resource
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
-                    DeleteAction::make()
+                    DeleteAction::make(),
+                    Impersonate::make(),
                 ]),
             ]);
         return $table;

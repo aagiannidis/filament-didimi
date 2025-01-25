@@ -57,6 +57,7 @@ class AdminPanelProvider extends PanelProvider
                 KnowledgeBasePlugin::make()
                     ->modalPreviews()
                     ->slideOverPreviews(),
+                \TomatoPHP\FilamentDocs\FilamentDocsPlugin::make()
             ])
             ->resources([
                 config('filament-logger.activity_resource')

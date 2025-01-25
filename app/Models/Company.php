@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+
 
 class Company extends Model
 {
@@ -38,4 +40,10 @@ class Company extends Model
         'is_active' => 'boolean',
         'tags' => 'array',
     ];
+
+    public function addresses(): MorphToMany
+    {
+        return $this->morphToMany(Address::class, 'addressable')
+            ->withPivot('type','is_correspondence');
+    }
 }

@@ -13,7 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
 use App\Models\VehicleFaultTemplate;
+use Illuminate\Support\Facades\Auth;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -24,8 +26,11 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextInputColumn;
 use App\Filament\Resources\TicketResource\Pages;
+use Filament\Forms\Components\Builder as FormBuilder;
+use App\Filament\Resources\TicketResource\RelationManagers;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use App\Filament\Resources\TicketResource\RelationManagers\CategoriesRelationManager;
+use App\Filament\Resources\TicketResource\RelationManagers\DocumentsRelationManager;
 use App\Filament\Resources\TicketResource\RelationManagers\VehicleFaultTemplatesRelationManager;
 
 class TicketResource extends Resource
@@ -40,6 +45,14 @@ class TicketResource extends Resource
         return $form
             ->columns(1)
             ->schema([
+                TextInput::make('assigned_by')
+                    ->translateLabel()
+                    ->default(fn ($state) => Auth::User()->id)
+                    ->required(),
+                TextInput::make('assigned_to')
+                    ->translateLabel()
+                    ->default(fn ($state) => Auth::User()->id)
+                    ->required(),
                 TextInput::make('title')
                     ->translateLabel()
                     ->autofocus()
@@ -52,23 +65,7 @@ class TicketResource extends Resource
                     ->options(self::$model::PRIORITY)
                     ->required()
                     ->in(self::$model::PRIORITY),
-                Select::make('vehicle_fault_template_id')
-                    ->translateLabel()
-                    ->columnSpanFull()
-                    ->relationship(name: 'vehicleFaultTemplate', titleAttribute: 'title')
-                    ->live()
-                    ->preload()
-                    ->afterStateUpdated(function (Set $set, ?string $state) {
-                        $set('description', VehicleFaultTemplate::find($state)->description);
-                        $set('precautions', VehicleFaultTemplate::find($state)->precautions);
-                        })
-                    ->hiddenOn('view'),
-                Textarea::make('description')
-                    ->columnSpanFull()
-                    ->rows(3),
-                TextInput::make('precautions')
-                    ->columnSpanFull()
-                    ->readonly(),
+
                 // Select::make('assigned_to')
                 //     ->options(
                 //         User::whereHas('roles', function (Builder $query) {
@@ -76,6 +73,26 @@ class TicketResource extends Resource
                 //         })->pluck('name', 'id')->toArray(),
                 //     )
                 //     ->required(),
+                Repeater::make('faults')
+                    ->schema([
+                        Select::make('vehicle_fault_template_id')
+                            ->translateLabel()
+                            ->columnSpanFull()
+                            ->relationship(name: 'vehicleFaultTemplate', titleAttribute: 'title')
+                            ->live()
+                            ->preload()
+                            ->afterStateUpdated(function (Set $set, ?string $state) {
+                                $set('description', VehicleFaultTemplate::find($state)->description);
+                                $set('precautions', VehicleFaultTemplate::find($state)->precautions);
+                                })
+                            ->hiddenOn('view'),
+                        Textarea::make('description')
+                            ->columnSpanFull()
+                            ->rows(3),
+                        TextInput::make('precautions')
+                            ->columnSpanFull()
+                            ->readonly(),
+                        ])->columnSpanFull(),
                 Textarea::make('comment')
                     ->columnSpanFull()
                     ->rows(3),
@@ -161,7 +178,8 @@ class TicketResource extends Resource
     {
         return [
             CategoriesRelationManager::class,
-            \App\Filament\Resources\TicketResource\RelationManagers\VehicleFaultTemplatesRelationManager::class
+            VehicleFaultTemplatesRelationManager::class,
+            DocumentsRelationManager::class
         ];
     }
 

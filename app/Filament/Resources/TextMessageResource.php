@@ -41,6 +41,7 @@ class TextMessageResource extends Resource
                     ->sortable()
                     ->default('-'),
                 TextColumn::make('message')
+                    ->translatable()
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('status')

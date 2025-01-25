@@ -41,7 +41,7 @@ class Address extends Model
 
     public function buildings(): MorphToMany
     {
-        return $this->morphedByMany(Building::class, 'addressable');           
+        return $this->morphedByMany(Building::class, 'addressable');
     }
 
     public function accounts(): MorphToMany
@@ -52,9 +52,13 @@ class Address extends Model
     public function formattedAddress(): \Illuminate\Database\Eloquent\Casts\Attribute
     {
         return new \Illuminate\Database\Eloquent\Casts\Attribute(
-            get: fn ($value) => $this->street_address.' '.$this->street_number.', '.$this->postal_code
+            get: fn ($value) =>
+                $this->street_address.', '.$this->street_number
+                .', postcode:'.$this->postal_code
+                .($this->unit_number?', unit:'.$this->unit_number:'')
+
         );
     }
 
-    
+
 }

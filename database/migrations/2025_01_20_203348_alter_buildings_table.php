@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('buildings', function (Blueprint $table) {
             $table->string('code',10)->unique()->after('name');
-            $table->renameColumn('number_of_floors','total_floors');            
+            $table->renameColumn('number_of_floors','total_floors');
             $table->integer('total_capacity')->default(0);
             $table->integer('current_occupancy')->default(0);
             $table->enum('status', ['ACTIVE', 'MAINTENANCE', 'INACTIVE'])->default('ACTIVE');
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->dropColumn('total_capacity');
             $table->dropColumn('current_occupancy');
             $table->dropColumn('status');
-            $table->dropColumn('manager_id');            
+            $table->dropColumn('manager_id');
         });
     }
 };

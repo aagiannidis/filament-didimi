@@ -22,6 +22,11 @@ class Ticket extends Model
         'assigned_by',
         'assigned_to',
         'attachment',
+        'faults'
+    ];
+
+    protected $casts = [
+        'faults' => 'array',
     ];
 
     const PRIORITY = [

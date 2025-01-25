@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\RefuelingOrder;
+use App\Policies\RefuelingOrderPolicy;
 use Parallax\FilamentComments\Policies\FilamentComment;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -15,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         \Parallax\FilamentComments\Models\FilamentComment::class => \Parallax\FilamentComments\Policies\FilamentCommentPolicy::class,
-
+        RefuelingOrder::class => RefuelingOrderPolicy::class,
     ];
 
     /**
