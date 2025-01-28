@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SecureDocument extends Model
 {
@@ -31,6 +32,23 @@ class SecureDocument extends Model
         'uploaded_at' => 'datetime',
         'expiry_date' => 'datetime',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($record) {
+
+            try {
+                $file_path = storage_path('app/private/' . $record->path);
+                unlink($file_path);
+                return true;
+            } catch (\Exception $e) {
+            }
+
+            return false;
+        });
+    }
 
     public function uploadedByUser(): BelongsTo
     {

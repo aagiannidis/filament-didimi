@@ -41,8 +41,7 @@ class DocumentsRelationManager extends RelationManager
             ->filters([
                 //
             ])
-            ->headerActions([
-            ])
+            ->headerActions([])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -50,9 +49,9 @@ class DocumentsRelationManager extends RelationManager
                 // shown even if we are not in edit mode.
                 PrintAction::make('print')
                     ->icon('heroicon-s-printer')
-                    ->title(fn($record) => 'RefuelingOrderTemplate' . '#'. $record->id)
+                    ->title(fn($record) => 'RefuelingOrderTemplate' . '#' . $record->id)
                     ->route(
-                        fn ($record) => TomatoPHPDocPrintPages\PrintDocument::getUrl(['record' => $record])
+                        fn($record) => TomatoPHPDocPrintPages\PrintDocument::getUrl(['record' => $record])
                     )
                     ->color('warning')
                     ->iconButton()

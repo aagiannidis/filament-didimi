@@ -64,9 +64,9 @@ class SecureDocumentUploadForm extends FormsComponent
                         ->required()
                         ->dehydrated(false),
                     FileUpload::make('secureDocuments')
-                        ->disk('public')
+                        ->disk('private')
                         ->directory('secure-documents')
-                        ->visibility('public')
+                        ->visibility('private')
                         ->acceptedFileTypes(['application/pdf'])
                         ->moveFiles()
                         ->minFiles(0)
