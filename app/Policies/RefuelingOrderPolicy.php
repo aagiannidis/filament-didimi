@@ -4,24 +4,13 @@ namespace App\Policies;
 
 use App\Models\User;
 use App\Models\RefuelingOrder;
-use App\Models\States\RefuelingOrder\Approved;
-use App\Models\States\RefuelingOrder\PendingApproval;
-use App\Models\States\RefuelingOrder\Draft;
-use App\Models\States\RefuelingOrder\Printed;
-use App\Models\States\RefuelingOrder\Closed;
-use App\Models\States\RefuelingOrder\ReceiptAttached;
-use App\Models\States\RefuelingOrder\Cancelled;
-use App\Models\States\RefuelingOrder\RefuelingOrderState;
 
 class RefuelingOrderPolicy
 {
     /**
      * Create a new policy instance.
      */
-    public function __construct()
-    {
-
-    }
+    public function __construct() {}
 
     public function before(User $user, string $ability): bool|null
     {
@@ -37,7 +26,7 @@ class RefuelingOrderPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->can('view_any_refueling::order');
     }
 
     /**
@@ -45,12 +34,12 @@ class RefuelingOrderPolicy
      */
     public function view(User $user, RefuelingOrder $order): bool
     {
-        return false;
+        return $user->can('view_refueling::order');
     }
 
     public function create(User $user)
     {
-        return $user->hasRole(['Operator', 'Secretarial']);
+        return $user->can('create_refueling::order');
     }
 
     /**
@@ -58,17 +47,20 @@ class RefuelingOrderPolicy
      */
     public function update(User $user, RefuelingOrder $order)
     {
-        if (($order->state->equals(Printed::class)) ||
-            ($order->state->equals(ReceiptAttached::class)) ||
-            ($order->state->equals(Closed::class)) ||
-            ($order->state->equals(Approved::class))) {
-                return false;
+        if ($order->isLockedForEdits()) {
+            return false;
         }
 
-        // Anyone can edit if still in draft or else only secretarial and manager
-        // provided we are not in any of the above states.
-        return ($order->state->equals(Draft::class)) ||
-                ($user->hasRole(['Secretarial','RefuelingOrdersManager']));
+        if (($user->hasRole(['Operator'])) && ($order->state->equals(\App\Models\States\RefuelingOrderStates\Draft::class))) {
+            if ($user->can('update_refueling::order'))
+                return true;
+        }
+
+        if ($user->hasRole(['Secretarial', 'RefuelingOrdersManager'])) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -76,7 +68,7 @@ class RefuelingOrderPolicy
      */
     public function delete(User $user, RefuelingOrder $order): bool
     {
-        return false;
+        return $user->can('delete_refueling::order');
     }
 
     /**
@@ -84,7 +76,7 @@ class RefuelingOrderPolicy
      */
     public function restore(User $user, RefuelingOrder $order): bool
     {
-        return false;
+        return $user->can('restore_refueling::order');
     }
 
     /**
@@ -101,16 +93,85 @@ class RefuelingOrderPolicy
 
     public function approve(User $user, RefuelingOrder $order)
     {
-        return $user->hasRole('RefuelingOrdersManager') &&
-                $order->state->equals(PendingApproval::class);
+        return $user->can('approve_refueling::order') &&
+            $order->state->canTransitionTo(\App\Models\States\RefuelingOrderStates\Approved::class);
     }
 
-    public function print(User $user, RefuelingOrder $order)
+    public function cancel(User $user, RefuelingOrder $order)
     {
-        return $user->hasRole(['Secretarial','RefuelingOrdersManager']);
-
-        return $user->hasRole(['Secretarial','RefuelingOrdersManager']) &&
-                $order->state->equals(Approved::class);
+        return $user->can('cancel_refueling::order') &&
+            $order->state->canTransitionTo(\App\Models\States\RefuelingOrderStates\Cancelled::class);
     }
+
+    public function archive(User $user, RefuelingOrder $order)
+    {
+        return $user->can('archive_refueling::order') &&
+            $order->state->canTransitionTo(\App\Models\States\RefuelingOrderStates\Archived::class);
+    }
+
+    public function issueDocuments(User $user, RefuelingOrder $order)
+    {
+        return $user->can('issue_documents_refueling::order') &&
+            $order->state->equals(\App\Models\States\RefuelingOrderStates\Processing::class);
+    }
+
+    public function deny(User $user, RefuelingOrder $order)
+    {
+        return $user->can('deny_refueling::order') &&
+            $order->state->canTransitionTo(\App\Models\States\RefuelingOrderStates\Cancelled::class);
+    }
+
+    public function denyWithActions(User $user, RefuelingOrder $order)
+    {
+        return $user->can('deny_actionable_refueling::order') &&
+            $order->state->canTransitionTo(\App\Models\States\RefuelingOrderStates\Draft::class);
+    }
+
+    public function close(User $user, RefuelingOrder $order)
+    {
+        return $user->can('close_refueling::order') &&
+            $order->state->canTransitionTo(\App\Models\States\RefuelingOrderStates\Closed::class);
+    }
+
+    public function submit(User $user, RefuelingOrder $order)
+    {
+        return $user->can('submit_refueling::order') &&
+            $order->state->canTransitionTo(\App\Models\States\RefuelingOrderStates\PendingApproval::class);
+    }
+
+    public function examine(User $user, RefuelingOrder $order)
+    {
+        return $user->can('examine_refueling::order') &&
+            $order->state->equals(\App\Models\States\RefuelingOrderStates\PendingApproval::class);
+    }
+
+
+    public function attachReceipt(User $user, RefuelingOrder $order)
+    {
+        return $user->can('attach_receipt_refueling::order') &&
+            $order->modelAllowsAttachReceipt();
+    }
+
+    public function attachDocuments(User $user, RefuelingOrder $order)
+    {
+        return $user->can('attach_signed_doc_refueling::order') &&
+            $order->modelAllowsAttachDocuments();
+    }
+
+    public function verifyReceipt(User $user, RefuelingOrder $order)
+    {
+        return $user->can('verify_receipt_refueling::order') &&
+            $order->modelAllowsVerifyReceipt();
+    }
+
+    public function verifyDocuments(User $user, RefuelingOrder $order)
+    {
+        // if (!Gate::allows('verifyDocuments', $this)) {
+        return $user->can('verify_signed_doc_refueling::order') &&
+            $order->modelAllowsVerifyDocuments();
+    }
+
+    // Add flag -> printed / attached scanned signed doc / attached receipt
+    // Verify scanned signed doc / Verify attached receipt
 
 }

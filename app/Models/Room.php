@@ -2,14 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\SecureDocument;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Room extends Model
 {
     use HasFactory;
+
 
     protected $fillable = [
         'floor_id',
@@ -36,6 +39,11 @@ class Room extends Model
     public function wallPorts(): HasMany
     {
         return $this->hasMany(WallPort::class);
+    }
+
+    public function secureDocuments(): MorphMany
+    {
+        return $this->morphMany(SecureDocument::class, 'doc_attachable');
     }
 
     // public function assets(): HasMany

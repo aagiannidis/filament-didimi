@@ -9,6 +9,7 @@ use Filament\Support\Colors\Color;
 use Filament\Http\Middleware\Authenticate;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
+use Filament\FontProviders\SpatieGoogleFontProvider;
 use Guava\FilamentKnowledgeBase\KnowledgeBasePlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
@@ -17,6 +18,7 @@ use Visualbuilder\EmailTemplates\EmailTemplatesPlugin;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Njxqlus\FilamentProgressbar\FilamentProgressbarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 class AdminPanelProvider extends PanelProvider
@@ -39,7 +41,8 @@ class AdminPanelProvider extends PanelProvider
                 'success' => Color::Emerald,
                 'warning' => Color::Orange,
             ])
-            ->font('Poppins')
+            //->font('Poppins')
+            ->font('Inter', provider: SpatieGoogleFontProvider::class)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -57,7 +60,8 @@ class AdminPanelProvider extends PanelProvider
                 KnowledgeBasePlugin::make()
                     ->modalPreviews()
                     ->slideOverPreviews(),
-                \TomatoPHP\FilamentDocs\FilamentDocsPlugin::make()
+                \TomatoPHP\FilamentDocs\FilamentDocsPlugin::make(),
+                FilamentProgressbarPlugin::make()->color('#f00'),
             ])
             ->resources([
                 config('filament-logger.activity_resource')

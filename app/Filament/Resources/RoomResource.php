@@ -2,21 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Room;
 use Filament\Forms;
+use App\Models\Room;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\RoomResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\CustomForms\SecureDocumentUploadForm;
 
 class RoomResource extends Resource
 {
@@ -66,7 +67,8 @@ class RoomResource extends Resource
                         ->default('ACTIVE')
                         ->required(),
                 ])->columns(2),
-            ]);
+                ...SecureDocumentUploadForm::schema(),
+            ])->columns(1);
     }
 
     public static function table(Table $table): Table
@@ -140,6 +142,7 @@ class RoomResource extends Resource
         return [
             \App\Filament\Resources\RoomResource\RelationManagers\WallPortsRelationManager::class,
             //RelationManagers\AssetsRelationManager::class,
+            \App\Filament\Resources\RoomResource\RelationManagers\SecureDocumentsRelationManager::class,
         ];
     }
 

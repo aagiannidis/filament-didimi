@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+
+
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
@@ -91,7 +93,7 @@ class UserResource extends Resource
 
     public static function table(Table $table): Table
     {
-        if(class_exists( Impersonate::class) && config('filament-users.impersonate')){
+        if (class_exists(Impersonate::class) && config('filament-users.impersonate')) {
             $table->actions([Impersonate::make('impersonate')]);
         }
         $table
@@ -147,6 +149,7 @@ class UserResource extends Resource
     {
         return [
             TasksRelationManager::class,
+            \App\Filament\Resources\UserResource\RelationManagers\SecureDocumentsRelationManager::class,
         ];
     }
 

@@ -48,7 +48,12 @@ class User extends Authenticatable
 
     public function tasks(): HasMany
     {
-        return $this->hasMany(\App\Models\Task::class,'assigned_to','id');
+        return $this->hasMany(\App\Models\Task::class, 'assigned_to', 'id');
+    }
+
+    public function uploadedDocuments(): HasMany
+    {
+        return $this->hasMany(\App\Models\SecureDocument::class, 'uploaded_by_user_id', 'id');
     }
 
     // public function uroles()

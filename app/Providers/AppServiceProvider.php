@@ -40,5 +40,6 @@ class AppServiceProvider extends ServiceProvider
         FilamentUser::register([
             \Filament\Resources\RelationManagers\RelationManager::make() // Replace with your custom relation manager
         ]);
+
     }
 }

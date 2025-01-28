@@ -16,6 +16,9 @@
         }
     </style>
 
+    {{-- Loads Roboto Flex --}}
+    @googlefonts('code')
+
     @filamentStyles
     @vite('resources/css/app.css')
 </head>
