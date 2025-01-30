@@ -29,6 +29,7 @@
         "marksitko/laravel-unsplash": "^2.2",
         "njxqlus/filament-progressbar": "^1.0",
         "parallax/filament-comments": "^1.4",
+        "postare/blade-mdi": "^1.1",
         "pusher/pusher-php-server": "^7.2",
         "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-google-fonts": "^1.4",

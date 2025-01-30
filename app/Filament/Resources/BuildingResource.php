@@ -17,7 +17,7 @@ class BuildingResource extends Resource
 {
     protected static ?string $model = Building::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationIcon = 'mdi-office-building';
     protected static ?string $navigationGroup = 'Property Management';
 
     public static function form(Form $form): Form
@@ -35,7 +35,7 @@ class BuildingResource extends Resource
                             ->maxLength(255),
                         Forms\Components\TextInput::make('description')
                             ->required()
-                            ->maxLength(255),                        
+                            ->maxLength(255),
                         Forms\Components\TextInput::make('total_floors')
                             ->required()
                             ->numeric()
@@ -74,7 +74,7 @@ class BuildingResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->sortable(),                
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('total_floors')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('current_occupancy')

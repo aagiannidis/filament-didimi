@@ -3,9 +3,12 @@
 namespace App\Filament\CustomForms;
 
 use Filament\Forms\Get;
+use Filament\Forms\Form;
 use App\Enums\DocumentType;
+use App\Models\RefuelingOrder;
 use Filament\Forms\FormsComponent;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Fieldset;
@@ -17,15 +20,26 @@ use Filament\Forms\Components\FileUpload;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 
-class SecureDocumentUploadForm extends FormsComponent
+class RefuelingUploadForm extends FormsComponent
 {
+
     public static function schema(): array
     {
         return [
-            Repeater::make('members')
+            Repeater::make('repeaterUploadFiles')
+                ->relationship('secureDocuments')
                 ->schema([
                     Select::make('type')
                         ->options(DocumentType::class)
+                        // ->options(function ($container) {
+                        //     // Get the values to exclude from the $data array (modify as needed based on context)
+                        //     $removeEnumValues = $container->getData();
+
+                        //     // Fetch all enum cases and exclude the specified values
+                        //     return collect(DocumentType::cases())
+                        //         ->reject(fn($case) => in_array($case->value, $removeEnumValues))
+                        //         ->mapWithKeys(fn($case) => [$case->name => $case->value]);
+                        // })
                         // ->options(function ($state, callable $get,) {
                         //     // Get the current selection from all repeaters
                         //     $selectedTypes = collect($get('../../members'))
@@ -44,9 +58,24 @@ class SecureDocumentUploadForm extends FormsComponent
                         // ->afterStateUpdated(function ($state, callable $get) {})
                         ->live()
                         ->required()
-                        ->disableOptionsWhenSelectedInSiblingRepeaterItems()
-                        ->dehydrated(false),
-                    FileUpload::make('members')
+                        ->disableOptionsWhenSelectedInSiblingRepeaterItems(),
+                    //->dehydrated(),
+                    Hidden::make('uploaded_by_user_id')
+                        ->required()
+                        ->formatStateUsing((fn() => \Illuminate\Support\Facades\Auth::user()->id))
+                        ->dehydrated(true),
+                    Hidden::make('path')
+                        ->default('nothing')
+                        ->columnSpanFull()
+                        ->dehydrated(true),
+                    Hidden::make('uploaded_at')
+                        ->default(now())
+                        ->dehydrated(true),
+                    Hidden::make('status_history')
+                        ->default('')
+                        ->dehydrated(true),
+                    FileUpload::make('random_filename')
+                        ->label('File to upload')
                         ->disk('private')
                         ->directory('secure-documents')
                         ->visibility('private')
@@ -54,14 +83,11 @@ class SecureDocumentUploadForm extends FormsComponent
                         ->moveFiles()
                         ->minFiles(0)
                         ->maxFiles(1)
-                        // ->getUploadedFileNameForStorageUsing(
-                        //     fn(TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
-                        //         ->prepend('custom-prefix-'),
-                        // )
-                        ->storeFileNamesIn('attachment_file_names')
+                        ->storeFileNamesIn('original_filename')
                         ->downloadable()
                         ->previewable(false)
-                        ->dehydrated(false),
+                        ->required(),
+                    //->dehydrated(false),
                 ])
                 ->reorderable(false)
         ];

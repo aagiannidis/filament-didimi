@@ -24,6 +24,7 @@ class SecureDocument extends Model
         'uploaded_at',
         'status_history',
         'expiry_date',
+        'path'
     ];
 
     protected $casts = [
@@ -40,7 +41,7 @@ class SecureDocument extends Model
         static::deleting(function ($record) {
 
             try {
-                $file_path = storage_path('app/private/' . $record->path);
+                $file_path = storage_path('app/private/' . $record->random_filename);
                 unlink($file_path);
                 return true;
             } catch (\Exception $e) {

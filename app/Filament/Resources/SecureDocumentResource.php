@@ -17,7 +17,7 @@ class SecureDocumentResource extends Resource
 {
     protected static ?string $model = SecureDocument::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'mdi-lock-outline';
 
     public static function form(Form $form): Form
     {

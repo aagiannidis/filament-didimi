@@ -29,7 +29,7 @@ class UserResource extends Resource
 
     protected static ?int $navigationSort = 9;
 
-    protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
+    protected static ?string $navigationIcon = 'mdi-account-multiple';
 
     public static function getNavigationLabel(): string
     {

@@ -15,7 +15,7 @@ class TextMessageResource extends Resource
 {
     protected static ?string $model = TextMessage::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'mdi-message-fast-outline';
 
     public static function form(Form $form): Form
     {

@@ -17,7 +17,7 @@ class AssetVehicleCheckResource extends Resource
 {
     protected static ?string $model = AssetVehicleCheck::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'mdi-car-search';
 
     public static function form(Form $form): Form
     {

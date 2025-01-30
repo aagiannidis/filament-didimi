@@ -54,7 +54,7 @@ class SecureDocumentsRelationManager extends RelationManager
     {
 
         if (Auth::id()) {
-            return response()->download(storage_path('app/private/' . $record->path));
+            return response()->download(storage_path('app/private/' . $record->random_filename));
         } else {
             abort(404);
         }

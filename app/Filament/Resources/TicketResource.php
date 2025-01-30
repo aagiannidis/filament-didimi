@@ -37,7 +37,7 @@ class TicketResource extends Resource
 {
     protected static ?string $model = Ticket::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'mdi-card-bulleted';
 
     public static function form(Form $form): Form
     {
@@ -47,11 +47,11 @@ class TicketResource extends Resource
             ->schema([
                 TextInput::make('assigned_by')
                     ->translateLabel()
-                    ->default(fn ($state) => Auth::User()->id)
+                    ->default(fn($state) => Auth::User()->id)
                     ->required(),
                 TextInput::make('assigned_to')
                     ->translateLabel()
-                    ->default(fn ($state) => Auth::User()->id)
+                    ->default(fn($state) => Auth::User()->id)
                     ->required(),
                 TextInput::make('title')
                     ->translateLabel()
@@ -84,7 +84,7 @@ class TicketResource extends Resource
                             ->afterStateUpdated(function (Set $set, ?string $state) {
                                 $set('description', VehicleFaultTemplate::find($state)->description);
                                 $set('precautions', VehicleFaultTemplate::find($state)->precautions);
-                                })
+                            })
                             ->hiddenOn('view'),
                         Textarea::make('description')
                             ->columnSpanFull()
@@ -92,28 +92,28 @@ class TicketResource extends Resource
                         TextInput::make('precautions')
                             ->columnSpanFull()
                             ->readonly(),
-                        ])->columnSpanFull(),
+                    ])->columnSpanFull(),
                 Textarea::make('comment')
                     ->columnSpanFull()
                     ->rows(3),
                 FileUpload::make('attachment')
                     ->columnSpanFull(),
-                    // ->deletable(false)
-                    // ->downloadable()
-                    // ->avatar()
-                    // ->imageEditor()
-                    // ->circleCropper()
-                    // ->uploadingMessage('Uploading your photo...')
-                    // ->image()
-                    // ->getUploadedFileNameForStorageUsing(
-                    //     fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
-                    //         ->prepend('custom-prefix-'),
-                    // )
-                    // ->disk('private')
-                    // ->directory('profile-photos')
-                    // ->visibility('private')
-                    // ->storeFileNamesIn('attachment_file_names')
-                    // ->moveFiles()
+                // ->deletable(false)
+                // ->downloadable()
+                // ->avatar()
+                // ->imageEditor()
+                // ->circleCropper()
+                // ->uploadingMessage('Uploading your photo...')
+                // ->image()
+                // ->getUploadedFileNameForStorageUsing(
+                //     fn (TemporaryUploadedFile $file): string => (string) str($file->getClientOriginalName())
+                //         ->prepend('custom-prefix-'),
+                // )
+                // ->disk('private')
+                // ->directory('profile-photos')
+                // ->visibility('private')
+                // ->storeFileNamesIn('attachment_file_names')
+                // ->moveFiles()
 
 
 

@@ -22,7 +22,7 @@ class VehicleResource extends Resource
 {
     protected static ?string $model = Vehicle::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'mdi-truck-outline';
 
     public static function form(Form $form): Form
     {
@@ -47,22 +47,22 @@ class VehicleResource extends Resource
                 Forms\Components\Select::make('vehicle_manufacturer_id')
                     // ->options(
                     //     VehicleManufacturer::all()->pluck('name', 'id')->toArray()
-                    // )         
-                    ->live()                               
-                    ->relationship(name: 'manufacturer', titleAttribute:'name')
-                    ->preload() 
-                    ->afterStateUpdated(function (Set $set, ?string $state) { 
-                            $set('vehicle_model_id', -1);                            
-                        })                   
-                    ->required(),                    
+                    // )
+                    ->live()
+                    ->relationship(name: 'manufacturer', titleAttribute: 'name')
+                    ->preload()
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        $set('vehicle_model_id', -1);
+                    })
+                    ->required(),
                 Forms\Components\Select::make('vehicle_model_id')
-                    ->label('Model')                    
-                    ->options(function(Get $get){
-                            $selectedManufId = $get('vehicle_manufacturer_id');
-                            if ($selectedManufId) {
-                                return VehicleModel::where('vehicle_manufacturer_id',$selectedManufId)->pluck('model','id')->toArray();
-                            }                    
-                        })                       
+                    ->label('Model')
+                    ->options(function (Get $get) {
+                        $selectedManufId = $get('vehicle_manufacturer_id');
+                        if ($selectedManufId) {
+                            return VehicleModel::where('vehicle_manufacturer_id', $selectedManufId)->pluck('model', 'id')->toArray();
+                        }
+                    })
                     ->required(),
                 Forms\Components\DatePicker::make('manufacture_date')
                     ->label('Date of manufacture')
@@ -72,20 +72,20 @@ class VehicleResource extends Resource
                     ->maxLength(50),
                 Forms\Components\Select::make('vehicle_type')
                     ->options(self::$model::VEHICLE_TYPES)
-                    ->required(),                    
+                    ->required(),
                 Forms\Components\Select::make('fuel_type')
                     ->label('Type of fuel')
                     ->options(self::$model::FUEL_TYPES)
-                    ->required(),                   
+                    ->required(),
                 Forms\Components\Select::make('emission_standard')
                     ->options(self::$model::EMISSION_STANDARDS)
-                    ->required(),                    
+                    ->required(),
                 Forms\Components\TextInput::make('weight')
                     ->label('Weight (kg)')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('seats')
-                    ->label('Number of seats')                    
+                    ->label('Number of seats')
                     ->required()
                     ->numeric(),
             ]);

@@ -19,6 +19,8 @@ trait FilamentHandleSecureDocuments
         $data = $this->form->getRawState();
         $record = $this->record;
 
+
+
         // If for any reason we do stupid things and we dont get both the type and document file
         // then we will be in trouble. So lets find if we have any malicious data and throw them out
         $invalidEntries = [];
@@ -50,6 +52,8 @@ trait FilamentHandleSecureDocuments
         $newSecureDocument->original_filename = $attachment_info[$keys[2]];
         $newSecureDocument->path = $attachment_info[$keys[1]];
         $newSecureDocument->uploaded_by_user_id = Auth::user()->id;
+        $newSecureDocument->uploaded_at = \Illuminate\Support\Carbon::now();
+        $newSecureDocument->expiry_date = \Illuminate\Support\Carbon::now()->addYears(20);
         $newSecureDocument->save();
     }
 }

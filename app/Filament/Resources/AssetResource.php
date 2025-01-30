@@ -21,18 +21,18 @@ class AssetResource extends Resource
 {
     protected static ?string $model = Asset::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'mdi-garage';
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([                    
+            ->schema([
                 Forms\Components\TextInput::make('asset_reference')
                     ->required()
                     ->maxLength(50),
                 Forms\Components\TextInput::make('license_plate')
                     ->maxLength(50),
-                    
+
                 Forms\Components\Section::make('Purchase Details')
                     ->schema([
                         Forms\Components\DatePicker::make('date_of_purchase'),
@@ -41,16 +41,16 @@ class AssetResource extends Resource
                         Forms\Components\TextInput::make('condition')
                             ->required(),
                     ])
-                    ->columns(3),                
+                    ->columns(3),
                 Forms\Components\Select::make('vehicle_id')
-                    ->relationship(name:'vehicle',titleAttribute:'license_plate')
+                    ->relationship(name: 'vehicle', titleAttribute: 'license_plate')
                     //->hidden(fn (string $operation):bool=>$operation==='view')
                     ->required(),
                 Forms\Components\Section::make()
                     ->relationship('vehicle')
                     ->schema([
                         Forms\Components\TextInput::make('license_plate')
-                            ->label('License Registration')                            
+                            ->label('License Registration')
                     ])
             ]);
     }
@@ -113,6 +113,4 @@ class AssetResource extends Resource
             'edit' => Pages\EditAsset::route('/{record}/edit'),
         ];
     }
-
-    
 }

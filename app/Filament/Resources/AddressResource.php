@@ -17,7 +17,7 @@ class AddressResource extends Resource
 {
     protected static ?string $model = Address::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'mdi-map-marker-radius-outline';
 
     public static function form(Form $form): Form
     {
@@ -50,8 +50,8 @@ class AddressResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->columns([                
-                Tables\Columns\TextColumn::make('formattedAddress'),                
+            ->columns([
+                Tables\Columns\TextColumn::make('formattedAddress'),
                 Tables\Columns\TextColumn::make('latitude')
                     ->numeric()
                     ->sortable(),
@@ -70,7 +70,7 @@ class AddressResource extends Resource
             ->filters([
                 //
             ])
-            ->actions([                
+            ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
