@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Exceptions\GenericServiceException;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Tables;
@@ -66,6 +67,7 @@ use ZeeshanTariq\FilamentAttachmate\Forms\Components\AttachmentFileUpload;
 use App\Filament\Resources\RefuelingOrderResource\Pages\CreateRefuelingOrder;
 use App\Filament\Resources\RefuelingOrderResource\RelationManagers\DocumentsRelationManager;
 use App\Filament\Resources\RefuelingOrderResource\RelationManagers\SecureDocumentsRelationManager;
+use App\Services\RefuelingOrderService;
 use Filament\Infolists\Components\Fieldset as ComponentsFieldset;
 
 class RefuelingOrderResource extends Resource implements HasShieldPermissions, HasKnowledgeBase
@@ -174,58 +176,6 @@ class RefuelingOrderResource extends Resource implements HasShieldPermissions, H
                                     ->label('Until:')
                             ])->columns(3)
                     ])
-                // \Filament\Infolists\Components\TextEntry::make('check_date'),
-                // \Filament\Infolists\Components\TextEntry::make('check_type'),
-                // \Filament\Infolists\Components\TextEntry::make('tags')
-                //     ->label('Tags')
-                //     ->formatStateUsing(
-                //         fn($state, $record) =>
-                //         $record->tags->pluck('name')->join(', ')
-                //     )
-                //     ->placeholder('No tags assigned'),
-                // // Infolists\Components\TextEntry::make('return_date'),
-                // // Infolists\Components\TextEntry::make('rental_cost'),
-                // // Infolists\Components\TextEntry::make('rental_status'),
-                // // Infolists\Components\TextEntry::make('asset.license_plate'),
-                // // CommentsEntry::make('filament_comments'),
-                // \Filament\Infolists\Components\RepeatableEntry::make('media')
-                //     ->label('Documents')
-                //     ->translateLabel()
-                //     ->schema([
-                //         \Filament\Infolists\Components\TextEntry::make('name'),
-                //         \Filament\Infolists\Components\TextEntry::make('file_name')
-                //             ->tooltip('Download the file here...')
-                //             ->formatStateUsing(
-                //                 fn($state, $record) =>
-                //                 "<a href='{$record->getFullUrl()}' target='_blank'><i class='fa fa-download'></i> {$record->name}</a>"
-                //             )
-                //             ->icon('heroicon-o-folder-arrow-down')
-                //             // "<a href='{$media->getFullUrl()}' target='_blank'>{$media->name}</a>"
-                //             //     ->formatStateUsing(fn ($state, $record) =>
-                //             //         $record->getMedia('certificates')->map(fn ($media) =>
-                //             //             "<a href='{$media->getFullUrl()}' target='_blank'>{$media->name}</a>"
-                //             //         )->join(', '))
-                //             ->html(), // Render links as HTML
-                //         //     ->formatStateUsing(fn ($state) => strip_tags($state)),
-                //         // \Filament\Infolists\Components\TextEntry::make('created_at')
-                //         //     ->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->diffForHumans()),
-                //     ])
-                //     ->columns(3),
-
-
-                // \Filament\Infolists\Components\RepeatableEntry::make('filamentComments')
-                //     ->label('Recent Comments')
-                //     ->translateLabel()
-                //     ->schema([
-                //         \Filament\Infolists\Components\TextEntry::make('user.name'),
-                //         \Filament\Infolists\Components\TextEntry::make('comment')
-                //             ->formatStateUsing(fn($state) => strip_tags($state)),
-                //         \Filament\Infolists\Components\TextEntry::make('created_at')
-                //             //->formatStateUsing(fn ($state) => \Carbon\Carbon::parse($state)->diffForHumans()),
-                //             ->since()
-                //             ->dateTimeTooltip(),
-                //     ])
-                //     ->columns(3)
             ])
             ->columns(1);
     }
@@ -598,10 +548,11 @@ class RefuelingOrderResource extends Resource implements HasShieldPermissions, H
                             //->icon(self::getDynamicActions()[$actionConfig])
                             ->requiresConfirmation()
                             ->hidden(fn($record) => !(Gate::Allows(json_decode($modelState)->gateFunction, $record)))
-                            ->action(fn($record) => self::dostuff($record));
+                            ->action(fn($record) => self::dostuff($record, json_decode($modelState)->gateFunction));
                     })->toArray(),
                 ]),
                 DocumentAction::make('print')
+                    ->label('Εγγραφο')
                     ->vars(fn($record) => [
                         DocsVar::make('$PRINT_DATE')
                             ->value(date("d/m/Y", strtotime(now()))),
@@ -728,9 +679,22 @@ class RefuelingOrderResource extends Resource implements HasShieldPermissions, H
 
     }
 
-    public static function dostuff(RefuelingOrder $record)
+    public static function dostuff(RefuelingOrder $record, $action)
     {
-        dd($record->id);
+
+        if ($action === 'deny') {
+            try {
+                app(RefuelingOrderService::class)->deny($record);
+            } catch (GenericServiceException $e) {
+                Notification::make()
+                    ->title('Fail !')
+                    ->body($e->getMessage())
+                    ->danger()
+                    ->send();
+            }
+        } else {
+            dd("Please perform the " . $action . " operation on record with id = " . $record->id);
+        }
     }
 
     public static function getRelations(): array

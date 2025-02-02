@@ -21,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         \Parallax\FilamentComments\Models\FilamentComment::class => \Parallax\FilamentComments\Policies\FilamentCommentPolicy::class,
         RefuelingOrder::class => RefuelingOrderPolicy::class,
-        Document::class =>TomatoDocumentPolicy::class
+        Document::class => TomatoDocumentPolicy::class
     ];
 
     /**
@@ -29,7 +29,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
-
+        $this->registerPolicies();
     }
 }
