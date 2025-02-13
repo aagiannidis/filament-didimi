@@ -4,9 +4,12 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\User;
 use App\Models\RefuelingOrder;
+use Illuminate\Auth\Authenticatable;
 use App\Policies\RefuelingOrderPolicy;
 use App\Policies\TomatoDocumentPolicy;
+
 use TomatoPHP\FilamentDocs\Models\Document;
 use Parallax\FilamentComments\Policies\FilamentComment;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;

@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "appstract/laravel-opcache": "^4.0",
         "awcodes/filament-quick-create": "^3.6",
         "barryvdh/laravel-dompdf": "^3.0",
         "bezhansalleh/filament-language-switch": "^3.1",
@@ -31,6 +32,7 @@
         "parallax/filament-comments": "^1.4",
         "postare/blade-mdi": "^1.1",
         "pusher/pusher-php-server": "^7.2",
+        "shuvroroy/filament-spatie-laravel-backup": "^2.2",
         "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-google-fonts": "^1.4",
         "spatie/laravel-medialibrary": "*",

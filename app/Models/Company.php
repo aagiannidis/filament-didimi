@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\CompanyType;
+use App\Enums\IndustryType;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -27,7 +29,6 @@ class Company extends Model
         'industry',
         'is_active',
         'notes',
-        'tags',
     ];
 
     /**
@@ -38,7 +39,8 @@ class Company extends Model
     protected $casts = [
         'id' => 'integer',
         'is_active' => 'boolean',
-        'tags' => 'array',
+        'type' => CompanyType::class,
+        'industry' => IndustryType::class,
     ];
 
     public function addresses(): MorphToMany

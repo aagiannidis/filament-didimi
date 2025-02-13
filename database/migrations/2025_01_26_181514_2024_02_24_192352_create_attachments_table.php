@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attachments', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('attachable_id');
-            $table->string('attachable_type')->index();
-            $table->string('filename')->index();
-            $table->softDeletes();
-            $table->timestamps();
-        });
+        // Schema::create('attachments', function (Blueprint $table) {
+        //     // $table->id();
+        //     // $table->unsignedBigInteger('attachable_id');
+        //     // $table->string('attachable_type')->index();
+        //     // $table->string('filename')->index();
+        //     // $table->softDeletes();
+        //     // $table->timestamps();
+        // });
     }
 
     /**
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('attachments');
+        // Schema::dropIfExists('attachments');
     }
 };

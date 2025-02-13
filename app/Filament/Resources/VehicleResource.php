@@ -12,8 +12,12 @@ use Filament\Tables\Table;
 use App\Models\VehicleModel;
 use Forms\Components\Select;
 use Filament\Resources\Resource;
+use Tables\Actions\ExportAction;
 use App\Models\VehicleManufacturer;
+use App\Filament\Exports\VehicleExporter;
+use App\Filament\Imports\VehicleImporter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\CustomForms\CreateModelForm;
 use App\Filament\Resources\VehicleResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\VehicleResource\RelationManagers;
@@ -57,12 +61,27 @@ class VehicleResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('vehicle_model_id')
                     ->label('Model')
+                    ->relationship(name: 'model', titleAttribute: 'model')
+                    //->getOptionLabelFromRecordUsing(fn (?VehicleModel $record) => "{$record?->model} - {$record?->vehicleManufacturer->name}")
                     ->options(function (Get $get) {
                         $selectedManufId = $get('vehicle_manufacturer_id');
                         if ($selectedManufId) {
                             return VehicleModel::where('vehicle_manufacturer_id', $selectedManufId)->pluck('model', 'id')->toArray();
                         }
                     })
+                    ->createOptionForm(
+
+                        \App\Filament\CustomForms\CreateModelForm::schema()
+                        // [
+                        //     Forms\Components\TextInput::make('name')
+                        //         ->required(),
+                        //     Forms\Components\TextInput::make('email')
+                        //         ->required()
+                        //         ->email(),
+                        // ]
+                    )
+                    // ->searchable()
+                    // ->preload()
                     ->required(),
                 Forms\Components\DatePicker::make('manufacture_date')
                     ->label('Date of manufacture')
@@ -141,6 +160,12 @@ class VehicleResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                Tables\Actions\ImportAction::make()
+                    ->importer(VehicleImporter::class),
+                \Filament\Tables\Actions\ExportAction::make()
+                    ->exporter(VehicleExporter::class)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

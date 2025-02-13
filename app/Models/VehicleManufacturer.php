@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\VehicleModel;
+use Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,4 +44,8 @@ class VehicleManufacturer extends Model
         return $this->hasMany(VehicleModel::class);
     }
 
+    public function scopeWithModels($query)
+    {
+        return $query->with('vehicleModels');
+    }
 }

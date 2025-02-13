@@ -7,6 +7,8 @@ use Illuminate\Support\ServiceProvider;
 use Filament\Support\Facades\FilamentAsset;
 use TomatoPHP\FilamentUsers\Facades\FilamentUser;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
+use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Notifications\Livewire\DatabaseNotifications;
 use Guava\FilamentKnowledgeBase\Filament\Panels\KnowledgeBasePanel;
 
 class AppServiceProvider extends ServiceProvider
@@ -42,6 +44,8 @@ class AppServiceProvider extends ServiceProvider
         FilamentUser::register([
             \Filament\Resources\RelationManagers\RelationManager::make() // Replace with your custom relation manager
         ]);
+
+        //DatabaseNotifications::trigger('filament.notifications.database-notifications-trigger');
 
         // \Filament\Support\Facades\FilamentAsset::register([
         //     Css::make('flat-icons', 'https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'),

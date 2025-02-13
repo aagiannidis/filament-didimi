@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Spatie\Tags\Tag;
+use App\Enums\CheckType;
 use Spatie\Tags\HasTags;
 use Spatie\Image\Enums\Fit;
+use App\Enums\CheckResultType;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
@@ -27,16 +29,23 @@ class VehicleCheck extends Model implements HasMedia
         'fail' => 'Fail',
     ];
 
-    /**
+     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'check_date',
-        'check_type',
-        'check_result',
+        'slip_code',
+        'branch_code',
         'asset_id',
+        'check_date',
+        'check_result',
+        'check_type',
+        'valid_to',
+        'issues_found',
+        'comments',
+        'driver_fullname',
+        'flags'
     ];
 
     /**
@@ -46,9 +55,15 @@ class VehicleCheck extends Model implements HasMedia
      */
     protected $casts = [
         'id' => 'integer',
-        'check_date' => 'date',
-        'vehicle_id' => 'integer',
-        'asset_id' => 'integer',
+        //'asset_id' => 'integer',
+        'check_date' => 'date:d/m/Y',
+        'check_result' => CheckResultType::class,
+        'check_type' => CheckType::class,
+        'valid_to' => 'date:d/m/Y',
+        //'issues_found' => 'string',
+        //'comments' => 'string',
+        //'driver_fullname' => 'string',
+        'flags' => 'array'
     ];
 
     protected static $recordEvents = ['created','updated','deleted'];

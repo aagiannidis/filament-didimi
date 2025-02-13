@@ -5,12 +5,14 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use Spatie\Tags\Tag;
+use App\Enums\CheckType;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Models\VehicleCheck;
 use Forms\Components\Select;
+use App\Enums\CheckResultType;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Card;
@@ -45,9 +47,12 @@ class VehicleCheckResource extends Resource
         return $infolist
             ->schema([
                 \Filament\Infolists\Components\TextEntry::make('asset.license_plate'),
-                \Filament\Infolists\Components\TextEntry::make('check_result'),
                 \Filament\Infolists\Components\TextEntry::make('check_date'),
+                \Filament\Infolists\Components\TextEntry::make('check_result'),
                 \Filament\Infolists\Components\TextEntry::make('check_type'),
+                \Filament\Infolists\Components\TextEntry::make('issues_found'),
+                \Filament\Infolists\Components\TextEntry::make('comments'),
+                \Filament\Infolists\Components\TextEntry::make('driver_fullname'),
                 \Filament\Infolists\Components\TextEntry::make('tags')
                     ->label('Tags')
                     ->formatStateUsing(
@@ -111,11 +116,37 @@ class VehicleCheckResource extends Resource
                     ->relationship('asset', 'license_plate')
                     ->required()
                     ->columnSpan(2),
-                Forms\Components\Select::make('check_result')
-                    ->options(self::$model::CHECK_RESULTS)
-                    ->required(),
+                // Forms\Components\Select::make('check_result')
+                //     ->options(self::$model::CHECK_RESULTS)
+                //     ->required(),
                 Forms\Components\DatePicker::make('check_date')
                     ->required(),
+                Forms\Components\Select::make('check_result')
+                    ->options(CheckResultType::getlabels())
+                    ->required(),
+                Forms\Components\Select::make('check_type')
+                    ->options(CheckType::getlabels())
+                    ->required(),
+                Forms\Components\DatePicker::make('valid_to')
+                    ->required(),
+                Forms\Components\TextInput::make('issues_found')
+                    ->required(),
+                Forms\Components\TextInput::make('comments')
+                    ->required(),
+                Forms\Components\TextInput::make('driver_fullname')
+                    ->required(),
+
+                    // 'id' => 'integer',
+                    // //'asset_id' => 'integer',
+                    // 'check_date' => 'date:d/m/Y',
+                    // 'check_result' => CheckResultType::class,
+                    // 'check_type' => CheckType::class,
+                    // 'valid_to' => 'date:d/m/Y',
+                    // //'issues_found' => 'string',
+                    // //'comments' => 'string',
+                    // //'driver_fullname' => 'string',
+                    // 'flags' => 'array'
+
                 // SpatieTagsInput::make('tags')
                 //     ->type('kteo_tags')
                 //     ->nestedRecursiveRules([
@@ -124,29 +155,31 @@ class VehicleCheckResource extends Resource
                 //         'in:tag1,tag2,tag3'
                 //     ])
                 //     ->columnSpan(2),
-                Forms\Components\Select::make('tags')
-                    //->options(Tag::where('type','kteo_tags')->pluck('name', 'id')->toArray()) // Predefined tags
-                    //->options(Tag::where('type','kteo_tags')->pluck('name', 'id')->toArray())
-                    //                        ->preload()
-                    //->getSearchResultsUsing(fn (string $search): array => Tag::where('type', 'kteo_tags')->pluck('name', 'id')->toArray())
-                    //->getOptionLabelUsing(fn ($value): ?string => Tag::where('type', 'kteo_tags')?->name)
-                    //->getOptionLabelsUsing(fn (Builder $query) => $query->WithType('kteo_tags'))
-                    ->label('Select Tags')
-                    ->placeholder('Choose tags...')
-                    ->preload()
-                    ->multiple()
-                    //->searchable()
-                    ->relationship(
-                        name: 'tags',
-                        titleAttribute: 'name',
-                        modifyQueryUsing: fn(Builder $query) => $query->WithType('kteo_tags')
-                    )
-                    ->getOptionLabelFromRecordUsing(fn(Model $record) => Str::upper($record->name))
-                    ->nestedRecursiveRules([
-                        'min:1',
-                        'max:30',
-                        self::$model::getKteoTags()
-                    ]),
+                SpatieTagsInput::make('flags')
+                    ->type('kteo_tags'),
+                // Forms\Components\Select::make('flags')
+                //     //->options(Tag::where('type','kteo_tags')->pluck('name', 'id')->toArray()) // Predefined tags
+                //     //->options(Tag::where('type','kteo_tags')->pluck('name', 'id')->toArray())
+                //     //                        ->preload()
+                //     //->getSearchResultsUsing(fn (string $search): array => Tag::where('type', 'kteo_tags')->pluck('name', 'id')->toArray())
+                //     //->getOptionLabelUsing(fn ($value): ?string => Tag::where('type', 'kteo_tags')?->name)
+                //     //->getOptionLabelsUsing(fn (Builder $query) => $query->WithType('kteo_tags'))
+                //     ->label('Select Tags')
+                //     ->placeholder('Choose tags...')
+                //     ->preload()
+                //     ->multiple()
+                //     //->searchable()
+                //     ->relationship(
+                //         name: 'tags',
+                //         titleAttribute: 'name',
+                //         modifyQueryUsing: fn(Builder $query) => $query->WithType('kteo_tags')
+                //     )
+                //     ->getOptionLabelFromRecordUsing(fn(Model $record) => Str::upper($record->name))
+                //     ->nestedRecursiveRules([
+                //         'min:1',
+                //         'max:30',
+                //         self::$model::getKteoTags()
+                //     ]),
                 // ->saveRelationshipsUsing(function ($component, $state, $record) {
                 //     foreach ($state as $filePath) {
                 //         $record->tags()->attach([
@@ -155,10 +188,10 @@ class VehicleCheckResource extends Resource
                 //         ]);
                 //     }
                 // }),
-                Forms\Components\TextInput::make('check_type')
-                    ->required()
-                    ->maxLength(50)
-                    ->columnSpan(2),
+                // Forms\Components\TextInput::make('check_type')
+                //     ->required()
+                //     ->maxLength(50)
+                //     ->columnSpan(2),
                 SpatieMediaLibraryFileUpload::make('certificates')
                     ->label(Str::ucfirst(__('documents')))
                     ->collection('certificates')
@@ -183,13 +216,13 @@ class VehicleCheckResource extends Resource
                     ->formatStateUsing(fn(string $state): string => Str::upper($state))
                     ->sortable()
                     ->searchable()
-                    ->badge()
-                    ->color(function (string $state): string {
-                        return match ($state) {
-                            'pass' => 'success',
-                            'fail' => 'danger'
-                        };
-                    }),
+                    ->badge(),
+                    // ->color(function (string $state): string {
+                    //     return match ($state) {
+                    //         'pass' => 'success',
+                    //         'fail' => 'danger'
+                    //     };
+                    // }),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

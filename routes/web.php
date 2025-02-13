@@ -8,6 +8,8 @@ use App\Mail\Visualbuilder\EmailTemplates\UserLogin;
 use App\Jobs\GenerateFuelOrderJob;
 use Barryvdh\DomPDF\Facade\Pdf;
 
+Route::get('/admin/login', Livewire\UserLogin::class)->name('filament.admin.auth.login');
+
 Route::get('/', function () {
 
     $toEmail = 'a.agiannidis@gmail.com';
@@ -39,9 +41,9 @@ Route::get('/', function () {
     }
 
     return view('welcome');
-});
+})->name('home');
 
-Route::get('login', Livewire\UserLogin::class)->name('login');
+
 
 // Route::group([
 //     'middleware' => 'auth',
@@ -55,51 +57,49 @@ Route::get('login', Livewire\UserLogin::class)->name('login');
 // });
 
 
-Route::get('/pdf', function () {
+// Route::get('/pdf', function () {
 
-    //return view('templates.pdf.RefuelingOrder');
+//     //return view('templates.pdf.RefuelingOrder');
 
-    // try {
-    //     $data = [
-    //         'title' => 'Monthly Sales',
-    //         'items' => [
-    //             ['product' => 'Laptop',  'quantity' => 10],
-    //             ['product' => 'Monitor', 'quantity' => 5],
-    //         ],
-    //     ];
-    //     return view('templates.pdf.RefuelingOrder', compact('data'));
-    //     //return  Pdf::loadView('templates.pdf.RefuelingOrder', compact('data'))->setPaper('a4', 'landscape')->download('invoice.pdf');
-    //     //return $pdf->download('invoice.pdf');
+//     // try {
+//     //     $data = [
+//     //         'title' => 'Monthly Sales',
+//     //         'items' => [
+//     //             ['product' => 'Laptop',  'quantity' => 10],
+//     //             ['product' => 'Monitor', 'quantity' => 5],
+//     //         ],
+//     //     ];
+//     //     return view('templates.pdf.RefuelingOrder', compact('data'));
+//     //     //return  Pdf::loadView('templates.pdf.RefuelingOrder', compact('data'))->setPaper('a4', 'landscape')->download('invoice.pdf');
+//     //     //return $pdf->download('invoice.pdf');
 
-    // } catch (\Exception $e) {
-    //     // Return a JSON response indicating failure
-    //     return response()->json([
-    //         'message' => 'Failed to generate pdf.',
-    //         'error' => $e->getMessage(),
-    //     ], 500);
-    // }
+//     // } catch (\Exception $e) {
+//     //     // Return a JSON response indicating failure
+//     //     return response()->json([
+//     //         'message' => 'Failed to generate pdf.',
+//     //         'error' => $e->getMessage(),
+//     //     ], 500);
+//     // }
 
-    $data = [
-        'user_id' => 3,
-        'report_id' => 21,
-        'include_charts' => true,
-        'title' => 'Monthly Sales',
-        'items' => [
-            ['product' => 'Laptop',  'quantity' => 10],
-            ['product' => 'Monitor', 'quantity' => 5],
-        ],
-    ];
-
-
-    //GenerateFuelOrderJob::dispatch($data);
-    dispatch(new GenerateFuelOrderJob($data));
-
-    return response()->json(['message' => 'Job dispatched']);
+//     $data = [
+//         'user_id' => 3,
+//         'report_id' => 21,
+//         'include_charts' => true,
+//         'title' => 'Monthly Sales',
+//         'items' => [
+//             ['product' => 'Laptop',  'quantity' => 10],
+//             ['product' => 'Monitor', 'quantity' => 5],
+//         ],
+//     ];
 
 
-});
+//     //GenerateFuelOrderJob::dispatch($data);
+//     dispatch(new GenerateFuelOrderJob($data));
 
-Route::get('login', Livewire\UserLogin::class)->name('login');
+//     return response()->json(['message' => 'Job dispatched']);
+// });
+
+
 
 // Route::group([
 //     'middleware' => 'auth',

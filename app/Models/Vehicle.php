@@ -28,8 +28,8 @@ class Vehicle extends Model
         'Electric' => 'Electric',
         'Hybrid' => 'Hybrid',
         'Other' => 'Other',
-    ];    
-    
+    ];
+
 
     const EMISSION_STANDARDS = [
         'Other' => 'Other',
@@ -39,7 +39,7 @@ class Vehicle extends Model
         'Euro 4' => 'Euro 4',
         'Euro 5' => 'Euro 5',
         'Euro 6' => 'Euro 6',
-    ];   
+    ];
 
 
     /**
@@ -87,5 +87,19 @@ class Vehicle extends Model
     {
         return $this->belongsTo(VehicleModel::class,'vehicle_model_id','id');
     }
+
+    public function modelPlusManufacturer(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return new \Illuminate\Database\Eloquent\Casts\Attribute(
+            get: fn ($value) => $this->model.' - '.$this->manufacturer->name
+        );
+    }
+
+    // public function getPrimaryAddressAttribute()
+    // {
+    //     return $this->addresses()
+    //         ->wherePivot('type','is_correspondence')
+    //         ->first();
+    // }
 
 }

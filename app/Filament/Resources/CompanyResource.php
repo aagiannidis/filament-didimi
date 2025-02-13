@@ -5,9 +5,15 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Company;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
+use App\Enums\CompanyType;
 use Filament\Tables\Table;
+use App\Enums\IndustryType;
+use Forms\Components\Select;
 use Filament\Resources\Resource;
+use Tables\Actions\ImportAction;
+use App\Filament\Imports\CompanyImporter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\CompanyResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,7 +32,11 @@ class CompanyResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->lazy()
+                    ->afterStateUpdated(function (Set $set, ?string $state) {
+                        $set('alias', str()->slug($state));
+                    }),
                 Forms\Components\TextInput::make('alias')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('vat_number')
@@ -40,15 +50,24 @@ class CompanyResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('website')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('type')
+                Forms\Components\Select::make('type')
+                    ->options(
+                        collect(CompanyType::getLabels())
+                            ->map(fn ($label) => ucwords($label))
+                            ->toArray()
+                        )
                     ->required(),
-                Forms\Components\TextInput::make('industry')
+                Forms\Components\Select::make('industry')
+                ->options(
+                    collect(IndustryType::getLabels())
+                        ->map(fn ($label) => ucwords($label))
+                        ->toArray()
+                    )
                     ->required(),
                 Forms\Components\Toggle::make('is_active')
                     ->required(),
                 Forms\Components\Textarea::make('notes')
                     ->columnSpanFull(),
-                Forms\Components\TextInput::make('tags'),
             ]);
     }
 
@@ -68,8 +87,10 @@ class CompanyResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('website')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('industry'),
+                Tables\Columns\TextColumn::make('type')
+                    ->formatStateUsing(fn ($state) => ucwords(CompanyType::getLabel($state))),
+                Tables\Columns\TextColumn::make('industry')
+                    ->formatStateUsing(fn ($state) => ucwords(IndustryType::getLabel($state))),
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -87,6 +108,10 @@ class CompanyResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+            ])
+            ->headerActions([
+                \Filament\Tables\Actions\ImportAction::make()
+                    ->importer(CompanyImporter::class)
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

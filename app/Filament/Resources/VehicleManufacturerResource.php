@@ -46,6 +46,19 @@ class VehicleManufacturerResource extends Resource implements HasKnowledgeBase
                     ->options(self::$model::TYPES)
                     ->required()
                     ->preload(),
+                \Filament\Forms\Components\Section::make('Registered Models')
+                    ->description('The list of registered models are shown below.')
+                    ->schema([
+                        \Filament\Forms\Components\View::make('custom.models')
+                            ->label('Available Models')
+                            ->viewData(
+                                [
+                                    'models' => $form->getRecord()->vehicleModels->pluck('model')->toArray()
+                                ]
+                            ),
+                    ])
+                    ->visible(fn(string $context): bool => $context === 'view')
+
             ]);
     }
 
@@ -87,6 +100,10 @@ class VehicleManufacturerResource extends Resource implements HasKnowledgeBase
 
     public static function getRelations(): array
     {
+        if (request()->routeIs('filament.admin.resources.vehicle-manufacturers.view')) {
+            return [];
+        }
+
         return [
             ModelsRelationManager::class,
         ];
@@ -103,6 +120,11 @@ class VehicleManufacturerResource extends Resource implements HasKnowledgeBase
     }
 
 
+    public static function getEloquentQuery(): Builder
+    {
+        //return parent::getEloquentQuery()->withModels();
+        return parent::getEloquentQuery()->with('vehicleModels');
+    }
 
     // public static function getDocumentation(): array
     // {

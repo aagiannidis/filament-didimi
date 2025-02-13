@@ -26,7 +26,7 @@ class UserLogin extends Component implements HasForms
     public function mount(): void
     {
         if (auth()->check()) {
-            redirect()->intended(route('tickets.index'));
+            redirect()->intended(route('home'));
         }
 
         $this->form->fill();
@@ -60,7 +60,7 @@ class UserLogin extends Component implements HasForms
 
         session()->regenerate();
 
-        return redirect()->intended(route('tickets.index'));
+        return redirect()->intended(route('home'));
     }
 
     protected function throwFailureValidationException(): never

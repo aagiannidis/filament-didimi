@@ -27,11 +27,11 @@ class VehicleModel extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'vehicle_manufacturer_id' => 'integer',
     ];
 
     public function vehicleManufacturer(): BelongsTo
     {
         return $this->belongsTo(VehicleManufacturer::class);
     }
+
 }

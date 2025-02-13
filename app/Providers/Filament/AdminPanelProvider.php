@@ -20,6 +20,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Njxqlus\FilamentProgressbar\FilamentProgressbarPlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use ShuvroRoy\FilamentSpatieLaravelBackup\FilamentSpatieLaravelBackupPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -31,7 +32,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->databaseNotifications(true)
-            ->databaseNotificationsPolling(null)
+            ->databaseNotificationsPolling('30s')
             ->sidebarCollapsibleOnDesktop()
             ->colors([
                 'danger' => Color::Rose,
@@ -62,6 +63,8 @@ class AdminPanelProvider extends PanelProvider
                     ->slideOverPreviews(),
                 \TomatoPHP\FilamentDocs\FilamentDocsPlugin::make(),
                 FilamentProgressbarPlugin::make()->color('#f00'),
+                FilamentSpatieLaravelBackupPlugin::make()
+                    ->usingQueue('backupQueue'),
             ])
             ->resources([
                 config('filament-logger.activity_resource')
